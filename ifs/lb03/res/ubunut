@@ -1,0 +1,56 @@
+/var/log/auth.log
+
+Nov  6 17:27:38 ubuntu sshd[2595]: Invalid user admin from 10.1.1.131
+Nov  6 17:27:38 ubuntu sshd[2595]: Failed none for invalid user admin from 10.1.1.131 port 42096 ssh2
+Nov  6 17:27:44 ubuntu sshd[2597]: Invalid user sqladmin from 10.1.1.131
+Nov  6 17:27:44 ubuntu sshd[2597]: Failed none for invalid user sqladmin from 10.1.1.131 port 57131 ssh2
+Nov  6 17:27:54 ubuntu sshd[2601]: Invalid user administrator from 10.1.1.131
+Nov  6 17:27:54 ubuntu sshd[2601]: Failed none for invalid user administrator from 10.1.1.131 port 43829 ssh2
+Nov  6 17:28:04 ubuntu sshd[2605]: Invalid user msfadmin from 10.1.1.131
+Nov  6 17:28:04 ubuntu sshd[2605]: Failed none for invalid user msfadmin from 10.1.1.131 port 59902 ssh2
+Nov  6 17:28:09 ubuntu sshd[2626]: Invalid user admin from 10.1.1.131
+Nov  6 17:28:09 ubuntu sshd[2626]: pam_unix(sshd:auth): check pass; user unknown
+Nov  6 17:28:09 ubuntu sshd[2626]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=10.1.1.131 
+Nov  6 17:28:12 ubuntu sshd[2626]: Failed password for invalid user admin from 10.1.1.131 port 45192 ssh2
+Nov  6 17:28:17 ubuntu sshd[2628]: Invalid user sqladmin from 10.1.1.131
+Nov  6 17:28:17 ubuntu sshd[2628]: pam_unix(sshd:auth): check pass; user unknown
+Nov  6 17:28:17 ubuntu sshd[2628]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=10.1.1.131 
+Nov  6 17:28:19 ubuntu sshd[2628]: Failed password for invalid user sqladmin from 10.1.1.131 port 45485 ssh2
+
+
+
+fail2ban logs
+2013-11-06 17:39:17,454 fail2ban.actions: WARNING [ssh] Ban 10.1.1.131
+
+iptables output
+its@ubuntu:~$ sudo iptables -L -n
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+fail2ban-ssh  tcp  --  0.0.0.0/0            0.0.0.0/0           multiport dports 22 
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  10.1.1.0/24          0.0.0.0/0           ctstate NEW 
+ACCEPT     all  --  172.16.1.0/24        0.0.0.0/0           ctstate NEW 
+ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           ctstate RELATED,ESTABLISHED 
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain fail2ban-ssh (1 references)
+target     prot opt source               destination         
+DROP       all  --  10.1.1.131           0.0.0.0/0           
+RETURN     all  --  0.0.0.0/0            0.0.0.0/0           
+
+
+
+settings for fail2ban in /etc/fail2ban/jail
+
+[proftpd]
+
+enabled  = true # war false
+port     = ftp,ftp-data,ftps,ftps-data
+filter   = proftpd
+logpath  = /var/log/proftpd/proftpd.log
+maxretry = 3 #war 6
+
