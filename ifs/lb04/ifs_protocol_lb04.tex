@@ -189,28 +189,31 @@ eth1  Link encap:Ethernet  HWaddr d8:d3:85:77:23:81
       Interrupt:19 Memory:f0400000-f0420000  
 \end{lstlisting}
 Hier erkennt man, dass der Client sich nun die IP Adresse 2001::a:dad3:85ff:fe77:2381/64 mittels Autokonfiguration zugewiesen hat. Diese enthält dabei das vom Router verbreitete Prefix 2001:0:0:a::/64.
-
-
+Anschließend konnten sich der Router und der Client über diese IPv6 Adressen gegenseitig erreichen. Überprüft wurde das durch einen Ping-Versuch.
 
 \section{Fragen}
 
 \subsection{Welche Nachrichten stehen im Neighbour Discovery Protocol zur Verfügung?}
 Das NDP nutz ICMPv6 um die Informationen im Netzwerk auszutauschen. Es definiert dabei folgende 5 verschiedene Nachrichten.
 \begin{itemize}
-\item Router Solicitation: Mittles dieser Nachricht werden von Clients eine Router Advertisement von allen Routern im Netzwerk angefordert.
-\item Router Advertisement: Damit antworten Router auf Router Solicitation Nachrichten um die IP Konfiguration im Netzwerk zu verteilen. Neben den Antworten auf Router Solicitation Nachrichten senden Router diese Nachricht auch periodisch ins Netzwerk.
-\item Neighbor Solicitation: Damit testen Clients ihre ausgewählten IP Adressen im Netzwerk ob diese auch eindeutig sind oder bereits vergeben. Bekommen Clients keine Antwort auf ihre Neighbor Solicitation Nachricht so nehmen sie ihre Adresse als gültig an.
-\item Neighbor Advertisement: Diese Nachricht wird gesendet falls ein Client bereits die IP Adresse besitzt die ein anderer Client über eine Neighbor Solicitation Nachricht verbreitet. Damit wird dem neuen Client bekannt gemacht, dass er eine andere IP Adresse wählen muss.
-\item Redirect: Mittels einer Redirect Nachricht können Router bessere Routen bekannt geben sofern es einen anderen besseren ersten Hop gibt zu gewissen Zielen.
+\item \textbf{Router Solicitation:} Mittles dieser Nachricht werden von Clients eine Router Advertisement von allen Routern im Netzwerk angefordert.
+\item \textbf{Router Advertisement:} Damit antworten Router auf Router Solicitation Nachrichten um die IP Konfiguration im Netzwerk zu verteilen. Neben den Antworten auf Router Solicitation Nachrichten senden Router diese Nachricht auch periodisch ins Netzwerk.
+\item \textbf{Neighbor Solicitation:} Damit testen Clients ihre ausgewählten IP Adressen im Netzwerk ob diese auch eindeutig sind oder bereits vergeben. Bekommen Clients keine Antwort auf ihre Neighbor Solicitation Nachricht so nehmen sie ihre Adresse als gültig an.
+\item \textbf{Neighbor Advertisement:} Diese Nachricht wird gesendet falls ein Client bereits die IP Adresse besitzt die ein anderer Client über eine Neighbor Solicitation Nachricht verbreitet. Damit wird dem neuen Client bekannt gemacht, dass er eine andere IP Adresse wählen muss.
+\item \textbf{Redirect:} Mittels einer Redirect Nachricht können Router bessere Routen bekannt geben sofern es einen anderen besseren ersten Hop gibt zu gewissen Zielen.
 \end{itemize}
 
 \subsection{Welche Nachrichten in der IPv4 Welt werden dadurch das NDP IPv6 ersetzt?}
+Das NDP von IPv6 ersetzt mit seinen verfügbaren Nachrichten das Address Resolution Protocol (ARP) von IPv4. Dabei verwaltet jeder Client eigene Address-Caches bei dem zu jeder IPv6-Adresse eine Link-Layer Adresse steht. Die Link-Layer Adressen von Clients werden dabei über Neighbor-Solicitation-Nachrichten erfragt.
 
 \subsection{Wie funktioniert der Address Autoconfiguration Mechanismus?}
+Als allererstes konfiguriert sich der Client eine Link-local-Adresse die er aus dem Prefix FE80 und seinem Interface Indentifier zusammenbaut. Danach generiert der Client die Solicited-Node Multicast Adresse und sendet eine Neighbor Solicitation Nachricht an die Solicited-Node Multicast Adresse. Sofern kein Client antwortet ist diese Adresse nicht vergeben und kann vom ursprünglichen Client verwendet werden. Ist dieser Fall eingetreten sendet der Client anschließend eine Router Solicitation Nachricht an alle Router (FE02::2) um die Netzwerkinformationen zu erhalten. Mit den Informationen aus der Router Advertisement Nachricht kann sich der Client nun eine Global Unicast Adresse konfigurieren und ist nun bereit im Internet zu kommunizieren. 
 
 \subsection{Erläutern Sie den Neighbour Unreachability Detection Mechanismus?}
+Der Neighbour Unreachability Detection Mechanismus ist Teil des Neighbour Discovery Protocols und wird verwendet um die Adress-Caches der Clients auf dem neuesten Stand zu halten. Sofern regelmäßig mit einem Client kommuniziert wird ist die Neighbour Unreachability Detection nicht notwendig. Überschreitet ein Eintrag im Adress-Cache allerdings seinen Gültigkeitszeitraum ohne das eine Kommunikation stattgefunden hat, so wird überprüft ob der Client noch verfügbar ist. Zuerst wird versucht die Erreichbarkeit des anderen Clients mittels normaler Kommunikation zu bestätigen. Antwortet dieser nicht so wird anschließend eine Neighbor-Solicitation-Nachricht für diesen Client versendet. Erhält der Client wieder keine Antwort so wird der Kommunikationspartner aus dem Adress-Cache entfernt.
 
 \subsection{Wie wird eine Duplicate Address Detection durchgeführt? Wer ist daran beteiligt?}
+Die Duplicate Address Detection ist Teil des Neighbor Discovery Protocols und wird bei der Address Autoconfiguration verwendet. Während der Address Autokonfiguration muss der Client überprüfen ob die von ihm gewählte Adresse noch frei ist. Dazu sendet er eine Neighbor Solicitation Nachricht an die vorher generierte Solicited-Node Multicast Adresse. Antwortet ihm daraufhin ein anderer Client mit einer Neighbor Advertisement Nachricht auf der All-Nodes Multicast Adresse so ist diese Adresse bereits vergeben und es muss eine manuelle Konfiguration vorgenommen werden. Erhält der Client hingegen keine Antwort so gilt die gewählte Adresse als nicht vergeben und kann vom Client verwendet werden. An der Duplicate Address Detection sind somit alle Clients am selben Link beteiligt.
 
 \subsection{Welche Sicherheitsrisiken bestehen bei NDP IPv6?}
 Wie beim DHCP-Spoofing können Clients im Netzwerk nicht kontrollieren von wem die Informationen gesendet werden und ob diese korrekt sind oder verfälscht. Ein Angreifer kann sich demnach, sofern er sich bereits im Netzwerk befindet, als Router ausgeben und gefälschte IP Konfigurationen im Netzwerk verbreiten. 
