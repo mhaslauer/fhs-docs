@@ -138,16 +138,19 @@
 %----------------------------------------------------------------------------------------
 \section{Beschreibung}
 In der folgenden Übung wird das Neighbour Detection Protocol (NDP) von IPv6 näher untersucht und aktiv durchgeführt. Dabei wird die in Abbildung \ref{fig:topologie} gezeigte Topologie verwendet.
+
 \begin{figure}[ht]
 	\centering
 		\includegraphics[width=0.90\textwidth]{img/lab04.png}
 	\caption{Netzwerktopologie der Übung}
 	\label{fig:topologie}
 \end{figure}
+
 Ein Ubuntu Rechner fungiert hierbei als eine Art von DHCP Server. Bei IPv6 ist kein DHCP Server mehr notwendig um neuen Clients automatisch eine IP Adresse zuweisen zu können. Allerdings muss auf mindestens einem Rechner der sogenannte Route Advertisement Daemon (radvd) laufen um die Netzwerkkonfiguration im Netz zu verbreiten. Der zweite Rechner ist hierbei nur ein Client der neu ins Netzwerk integriert wird und dabei eine IP Adresse anfordert.
 
 \subsection{Konfiguration des radvd}
-Der Route Advertisement Daemon (radvd) ist ein Service der auf dem Rechner läuft und regelmäßig eine Router Advertisement über das Netzwerk schickt um sich neuen Clients bekannt zu machen. Außerdem reagiert er auf Router Solicitation Nachrichten von Clients. Der radvd muss dabei mit den entsprechenden Parametern konfiguriert werden. Listing \ref{lst:radvd.conf} zeigt die radvd.conf des Service auf dem Rechner in der Übung.
+Der Router Advertisement Daemon (radvd) ist ein Service der auf dem Rechner läuft und regelmäßig eine Router Advertisement über das Netzwerk schickt um sich neuen Clients bekannt zu machen. Außerdem reagiert er auf Router Solicitation Nachrichten von Clients. Der radvd muss dabei mit den entsprechenden Parametern konfiguriert werden. Listing \ref{lst:radvd.conf} zeigt die radvd.conf des Service auf dem Rechner in der Übung.
+
 \begin{lstlisting}[style=code,caption={radvd.conf},label=lst:radvd.conf]
 interface eth1
 {
@@ -164,17 +167,49 @@ interface eth1
 	};
 };
 \end{lstlisting}
+
 In der ersten Zeile ist der Name des Interfaces (eth1) angegeben auf dem der Service lauscht. In den weiteren Zeilen kann die Router Advertisement an/aus geschalten werden und deren Verbreitungsintervall konfiguriert werden. Die wichtigste Zeile der Konfiguration ist \verb!prefix!. Hier wird konfiguriert welche Netzinformation verbreitet wird. Im Fall dieser Übung handelt es sich um das Netz 2001:0:0:a::/64.
 Mittels radvd –C /etc/radvd.conf kann der Service gestartet werden. Der Parameter -C gibt dabei den Ort des Konfigurationsfiles.
 
-TODO: ifconfig des Routers einfügen mir Erklärung.
+\paragraph{}
+Listing \ref{lst:ifconfig} zeigt die IPv6 Adressen des Ubuntu Routers am Interface eth1. Da bei IPv6 einem Interface mehrere Adressen zugewiesen werden können, ist es kein Problem dass dieses Interface mehrere globale Adressen hat. Außer den beiden globalen Adressen (IP: 2001:0:0:a::/64) hat das Interface auch eine Link-Local Adresse (FE80::/64) zugewiesen bekommen.
+
+\begin{lstlisting}[style=code,caption={ifconfig des Ubuntu Routers},label=lst:ifconfig]
+root@U460-15:/home/its# ifconfig
+eth1      Link encap:Ethernet  HWaddr 18:a9:05:c3:f6:a1  
+          inet6 addr: 2001::a:1d8f:ac12:8a54:a9c5/64 Scope:Global
+          inet6 addr: 2001::a:1aa9:5ff:fec3:f6a1/64 Scope:Global
+          inet6 addr: fe80::1aa9:5ff:fec3:f6a1/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:117 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:237 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:31914 (31.9 KB)  TX bytes:48327 (48.3 KB)
+          Interrupt:19 Memory:f0400000-f0420000
+\end{lstlisting}
 
 \section{Neighbour Discovery Protocol Ablauf}
-Um einen neuen Ablauf des Protokolls zu initiieren wird das Interface eth1 des Clients, das mt dem Router verbunden ist, neu hochgefahren. Als Erstes wird dabei vom Client eine Router Solicitation Nachricht gesendet um die Konfiguration vom Router zu erhalten. Dieser Antwortet mit einer Router Advertisement Nachricht an den Client. Daraufhin baut sich der Client aus den nun bekannten Präfixen aus der Router Advertisement Nachricht und seiner Hardwareadresse des Interfaces eine IP Adresse zusammen. Daraufhin sendet der Client eine Neighbor Solicitation an alle Clients im Netzwerk. Sofern kein anderer Rechner mit einer Neighbor Advertisement antwortet, so weis der ursprüngliche Client, dass diese Adresse frei ist und kann diese ab sofort benutzen.
+Um einen neuen Ablauf des Protokolls zu initiieren wird das Interface eth1 des Clients, das mit dem Router verbunden ist, neu hochgefahren. Als erstes wird dabei vom Client eine Router Solicitation Nachricht gesendet um die Konfiguration vom Router zu erhalten. Dieser antwortet mit einer Router Advertisement Nachricht an den Client. Daraufhin baut sich der Client aus den nun bekannten Präfixen aus der Router Advertisement Nachricht und seiner Hardwareadresse des Interfaces eine IP Adresse zusammen. Danach sendet der Client eine Neighbor Solicitation Nachricht (siehe Abbildung \ref{fig:wireshark:neighbor-solicitation}) an alle Clients im Netzwerk. Sofern kein anderer Rechner mit einer Neighbor Advertisement antwortet, so weis der ursprüngliche Client, dass diese Adresse frei ist und kann diese ab sofort benutzen.
 
-\textbf{TODO: Einfügen von Wireshark mitgesnifftem}
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/wireshark-neighbor-solicitation.png}
+	\caption{Wireshark Neighbor-Solicitation-Nachricht}
+	\label{fig:wireshark:neighbor-solicitation}
+\end{figure}
+
+Listing \ref{lst:wireshark} zeigt den beschriebenen Ablauf im Wireshark Protokoll. Wenn an die IPv6 Adresse \verb!ff02::2! Pakete gesendet werden, erhalten das alle Router im Netzwerk. Bei der Adresse \verb!ff02::1! werden die Daten an alle Hosts im Netzwerk gesendet.
+
+\begin{lstlisting}[style=code,caption={Wireshark},label=lst:wireshark]
+"No.","Time","Source","Destination","Protocol","Length","Info"
+"1","11.621032","fe80::dad3:85ff:fe77:2381","ff02::2","ICMPv6","70","Router Solicitation"
+"2","12.258104","fe80::1aa9:5ff:fec3:f6a1","ff02::1","ICMPv6","118","Router Advertisement"
+"3","12.501054","::","ff02::1:ff67:3544","ICMPv6","78","Neighbor Solicitation"
+"4","12.657021","::","ff02::1:ff77:2381","ICMPv6","78","Neighbor Solicitation"
+\end{lstlisting}
 
 Nach erfolgreicher Durchführung des Neighbour Discovery Protocols kann mit dem Befehl \verb!ifconfig! die Konfiguration überprüft werden. Listing \ref{lst:client:ipconfig} zeigt die IP Konfiguration des Clients nach der Durchführung.
+
 \begin{lstlisting}[style=code,caption={IP Konfiguration des Clients},label=lst:client:ipconfig]
 root@U460-16:/home/its# ifconfig
 eth1  Link encap:Ethernet  HWaddr d8:d3:85:77:23:81  
@@ -188,8 +223,21 @@ eth1  Link encap:Ethernet  HWaddr d8:d3:85:77:23:81
       RX bytes:132118 (132.1 KB)  TX bytes:82430 (82.4 KB)
       Interrupt:19 Memory:f0400000-f0420000  
 \end{lstlisting}
+
 Hier erkennt man, dass der Client sich nun die IP Adresse 2001::a:dad3:85ff:fe77:2381/64 mittels Autokonfiguration zugewiesen hat. Diese enthält dabei das vom Router verbreitete Prefix 2001:0:0:a::/64.
-Anschließend konnten sich der Router und der Client über diese IPv6 Adressen gegenseitig erreichen. Überprüft wurde das durch einen Ping-Versuch.
+Anschließend konnten sich der Router und der Client über diese IPv6 Adressen gegenseitig erreichen. Überprüft wurde das durch einen Ping-Versuch (siehe Listing \ref{lst:ping-an-client}).
+
+\begin{lstlisting}[style=code,caption={Ping an Client},label=lst:ping-an-client]
+root@U460-15:/home/its# ping6 -I eth1 2001::a:dad3:85ff:fe77:2381
+PING 2001::a:dad3:85ff:fe77:2381(2001::a:dad3:85ff:fe77:2381) from 2001::a:1d8f:ac12:8a54:a9c5 eth1: 56 data bytes
+64 bytes from 2001::a:dad3:85ff:fe77:2381: icmp_seq=1 ttl=64 time=0.424 ms
+64 bytes from 2001::a:dad3:85ff:fe77:2381: icmp_seq=2 ttl=64 time=0.191 ms
+64 bytes from 2001::a:dad3:85ff:fe77:2381: icmp_seq=3 ttl=64 time=0.226 ms
+^C
+--- 2001::a:dad3:85ff:fe77:2381 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2000ms
+rtt min/avg/max/mdev = 0.191/0.280/0.424/0.103 ms
+\end{lstlisting}
 
 \section{Fragen}
 
