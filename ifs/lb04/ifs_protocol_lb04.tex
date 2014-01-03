@@ -176,16 +176,16 @@ Listing \ref{lst:ifconfig} zeigt die IPv6 Adressen des Ubuntu Routers am Interfa
 
 \begin{lstlisting}[style=code,caption={ifconfig des Ubuntu Routers},label=lst:ifconfig]
 root@U460-15:/home/its# ifconfig
-eth1      Link encap:Ethernet  HWaddr 18:a9:05:c3:f6:a1  
-          inet6 addr: 2001::a:1d8f:ac12:8a54:a9c5/64 Scope:Global
-          inet6 addr: 2001::a:1aa9:5ff:fec3:f6a1/64 Scope:Global
-          inet6 addr: fe80::1aa9:5ff:fec3:f6a1/64 Scope:Link
-          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:117 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:237 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000 
-          RX bytes:31914 (31.9 KB)  TX bytes:48327 (48.3 KB)
-          Interrupt:19 Memory:f0400000-f0420000
+eth1  Link encap:Ethernet  HWaddr 18:a9:05:c3:f6:a1  
+      inet6 addr: 2001::a:1d8f:ac12:8a54:a9c5/64 Scope:Global
+      inet6 addr: 2001::a:1aa9:5ff:fec3:f6a1/64 Scope:Global
+      inet6 addr: fe80::1aa9:5ff:fec3:f6a1/64 Scope:Link
+      UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+      RX packets:117 errors:0 dropped:0 overruns:0 frame:0
+      TX packets:237 errors:0 dropped:0 overruns:0 carrier:0
+      collisions:0 txqueuelen:1000 
+      RX bytes:31914 (31.9 KB)  TX bytes:48327 (48.3 KB)
+      Interrupt:19 Memory:f0400000-f0420000
 \end{lstlisting}
 
 \section{Neighbour Discovery Protocol Ablauf}
@@ -201,11 +201,11 @@ Um einen neuen Ablauf des Protokolls zu initiieren wird das Interface eth1 des C
 Listing \ref{lst:wireshark} zeigt den beschriebenen Ablauf im Wireshark Protokoll. Wenn an die IPv6 Adresse \verb!ff02::2! Pakete gesendet werden, erhalten das alle Router im Netzwerk. Bei der Adresse \verb!ff02::1! werden die Daten an alle Hosts im Netzwerk gesendet.
 
 \begin{lstlisting}[style=code,caption={Wireshark},label=lst:wireshark]
-"No.","Time","Source","Destination","Protocol","Length","Info"
-"1","11.621032","fe80::dad3:85ff:fe77:2381","ff02::2","ICMPv6","70","Router Solicitation"
-"2","12.258104","fe80::1aa9:5ff:fec3:f6a1","ff02::1","ICMPv6","118","Router Advertisement"
-"3","12.501054","::","ff02::1:ff67:3544","ICMPv6","78","Neighbor Solicitation"
-"4","12.657021","::","ff02::1:ff77:2381","ICMPv6","78","Neighbor Solicitation"
+No. | Source | Destination | Info
+1 | fe80::dad3:85ff:fe77:2381 | ff02::2 | Router Solicitation
+2 | fe80::1aa9:05ff:fec3:f6a1 | ff02::1 | Router Advertisement
+3 | :: | ff02::1:ff67:3544 | Neighbor Solicitation
+4 | :: | ff02::1:ff77:2381 | Neighbor Solicitation
 \end{lstlisting}
 
 Nach erfolgreicher Durchführung des Neighbour Discovery Protocols kann mit dem Befehl \verb!ifconfig! die Konfiguration überprüft werden. Listing \ref{lst:client:ipconfig} zeigt die IP Konfiguration des Clients nach der Durchführung.
@@ -228,12 +228,12 @@ Hier erkennt man, dass der Client sich nun die IP Adresse 2001::a:dad3:85ff:fe77
 Anschließend konnten sich der Router und der Client über diese IPv6 Adressen gegenseitig erreichen. Überprüft wurde das durch einen Ping-Versuch (siehe Listing \ref{lst:ping-an-client}).
 
 \begin{lstlisting}[style=code,caption={Ping an Client},label=lst:ping-an-client]
-root@U460-15:/home/its# ping6 -I eth1 2001::a:dad3:85ff:fe77:2381
-PING 2001::a:dad3:85ff:fe77:2381(2001::a:dad3:85ff:fe77:2381) from 2001::a:1d8f:ac12:8a54:a9c5 eth1: 56 data bytes
+root: ping6 -I eth1 2001::a:dad3:85ff:fe77:2381
+PING 2001::a:dad3:85ff:fe77:2381 from 2001::a:1d8f:ac12:8a54:a9c5 eth1: 56 data bytes
 64 bytes from 2001::a:dad3:85ff:fe77:2381: icmp_seq=1 ttl=64 time=0.424 ms
 64 bytes from 2001::a:dad3:85ff:fe77:2381: icmp_seq=2 ttl=64 time=0.191 ms
 64 bytes from 2001::a:dad3:85ff:fe77:2381: icmp_seq=3 ttl=64 time=0.226 ms
-^C
+
 --- 2001::a:dad3:85ff:fe77:2381 ping statistics ---
 3 packets transmitted, 3 received, 0% packet loss, time 2000ms
 rtt min/avg/max/mdev = 0.191/0.280/0.424/0.103 ms
