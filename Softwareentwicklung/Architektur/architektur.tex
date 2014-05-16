@@ -15,15 +15,15 @@
 %----------------------------------------------------------------------------------------
 %	META DATA
 %----------------------------------------------------------------------------------------
-\def \theauthor  {Daniela Pointinger\\Michael Haslauer\\???}
-\def \footerauthor {Pointinger,Haslauer,???}
+\def \theauthor  {Daniela Pointinger\\Michael Haslauer\\Stefan Winkler\\Johannes Briewasser}
+\def \footerauthor {PoiD HasM WinS BriJ}
 \def \thedate    {\today}
 \def \thetitle   {Softwareentwicklung\\Architektur}
 \def \subtitle   {vom 10. Mai 2014}
 \def \shorttitle {SWE Architektur}
 \def \company    {Fachhochschule Salzburg}
 \def \department {itsb-m2013}
-\def \version    {0.1}
+\def \version    {1.0}
 
 \author{\theauthor\\\company}
 \date{\thedate}
@@ -137,10 +137,10 @@
 %	INHALT
 %----------------------------------------------------------------------------------------
 \section{Einführung}
-Das folgende Dokument beschreibt die Softwarearchitektur des Softwareentwicklungsprojekts "ÖBB Zahlsystem". Da es sich hierbei um eine Online-Applikation handelt die über unterschiedliche Wege erreicht werden soll muss ein hierfür geeignetes Architekturkonzept gewählt werden.
+Das folgende Dokument beschreibt die Softwarearchitektur des Softwareentwicklungsprojekts "Bahn Zahlsystem". Da es sich hierbei um eine Online-Applikation handelt die über unterschiedliche Wege erreicht werden soll muss ein hierfür geeignetes Architekturkonzept gewählt werden.
 
 \section{Architekturkontept}
-Das Projekt "ÖBB Zahlsystem" ist eine Online-Applikation die mehrere Möglichkeiten der Nutzung bietet. Außerdem müssen externe Drittapplikationen in die Applikation integriert werden. Das Grundkonzept das hier verwendet werden soll ich die Schichtenarchitektur. Diese bietet den Vorteil, dass Änderungen in bestimmten Bereichen nicht die komplette Applikation beeinflussen sondern nur in der jeweiligen Schicht angepasst werden müssen. Außerdem lassen sich in diesem Fall die Komponenten der Schichten auf logischer Ebene trennen und jeder Schicht einen speziellen Aufgabenbereich zuordnen. Die Architektur umfasst dabei die 4 Schichten für:
+Das Projekt \glqq{}Bahn Zahlsystem\grqq{} ist eine Online-Applikation die mehrere Möglichkeiten der Nutzung bietet. Außerdem müssen externe Drittapplikationen in die Applikation integriert werden können. Das Grundkonzept das hier verwendet werden soll ist die Schichtenarchitektur. Diese bietet den Vorteil, dass Änderungen in bestimmten Bereichen nicht die komplette Applikation beeinflussen sondern nur in der jeweiligen Schicht angepasst werden müssen. Außerdem lassen sich in diesem Fall die Komponenten der Schichten auf logischer Ebene trennen und jeder Schicht einen speziellen Aufgabenbereich zuordnen. Die Architektur umfasst dabei die 4 Schichten für:
 \begin{itemize}\itemsep2pt
  \item Domänenobjekte und Peristenz
  \item Business-Logik
@@ -150,10 +150,11 @@ Das Projekt "ÖBB Zahlsystem" ist eine Online-Applikation die mehrere Möglichke
 Im folgenden werden die einzelnen Schichten und deren Schnittstellen genauer beschrieben.
 
 \section{Schichtenbeschreibung}
+Bei einem Schichtenmodell gilt, dass die einzelnen Layer des Modells nur mit den direkt an einen Layer angrenzende Schichten kommunizieren kann.
 
 \subsection{Domänenobjekte und Persistenz}
-In dieser Schicht sind die einzelnen Objekte und deren Metadaten definiert die für den Einsatz in dieser Domäne nötig sind und in der Applikation verwendet werden. Die Objekte bilden die Schnittstelle zu den konkreten Daten für die Verarbeitung und Durchführung von Prozessen. Der Zugriff von der darüberliegenden Schicht auf Daten erfolgt somit nicht direkt sondern wird über diese Objekte gekapselt. Sie bietet demnach eine reine Objektschnittstelle an. Außerdem befindet sich in dieser Schicht keine weitere Logik, außer dejenigen, die für die Erstellung und Speicherung der Objekte nötig ist.\newline
-Eine Bereitstellung von Objekten bzw. Persistierung von Änderungen erfolgt nur auf Anfrage, heißt die Objekte werden lediglich als Pull-Schnittstelle bereit gestellt die von der darüberliegenden Schichte genutzt wird.\newline
+In dieser Schicht sind die einzelnen Objekte und deren Metadaten definiert, die für den Einsatz in dieser Domäne nötig sind und in der Applikation verwendet werden. Die Objekte bilden die Schnittstelle zu den konkreten Daten für die Verarbeitung und Durchführung von Prozessen. Der Zugriff von der darüberliegenden Schicht auf Daten erfolgt somit nicht direkt, sondern wird über diese Objekte gekapselt. Sie bietet demnach eine reine Objektschnittstelle. Außerdem befindet sich in dieser Schicht keine weitere Logik, außer derjenigen, die für die Erstellung und Speicherung der Objekte nötig ist.\newline
+Eine Bereitstellung der Objekte bzw. der Persistierung von Änderungen in der Datenbank erfolgt nur auf Anfrage. Die darüberliegende Schicht fragt über diese Persistenzschicht an, das Objekt mit den Daten aus der Datenbank zu befüllen. Um geänderte Daten in die Datenbank zu speichern, wird von der darüberliegenden Schicht eine Methode dieser Persistenzschicht aufgerufen.\newline
 Die Menge der Domänenobjekte und deren Metadaten ist eine nahezu vollständig definierte Menge. Änderungen in dieser Schicht ergeben weitreichendere Folgen für alle darüber angesiedelten Schichten. Außerdem ist in dieser Schicht die technische Schnittstelle zur Datenbank angesiedelt, sowie die Datenbank selbst.
 
 \subsection{Business-Logik}
@@ -167,7 +168,7 @@ Die Anbindung von Drittsystemen wird in einer eigenen Schicht gekapselt. Diese S
 
 \subsection{Schichtendiagramm}
 In Abbildung \ref{fig:architektur} ist das Schema der einzelnen Schichten in der Architektur visualisiert.
-\begin{figure}[ht]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{img/architektur.png}
 	\caption{Schema der Schichten}
@@ -193,9 +194,9 @@ Zu erkennen sind außerdem die einzelnen Schnittstellen und um welchen Typ von S
 
 % List of Listings
 %\newpage
-\phantomsection
-\addcontentsline{toc}{section}{\lstlistlistingname}
-\lstlistoflistings
+%\phantomsection
+%\addcontentsline{toc}{section}{\lstlistlistingname}
+%\lstlistoflistings
 
 % Bibliography
 %\newpage
