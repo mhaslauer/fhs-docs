@@ -136,10 +136,13 @@
 %----------------------------------------------------------------------------------------
 %	INHALT
 %----------------------------------------------------------------------------------------
-\section{Einführung}
-Das folgende Dokument beschreibt die Softwarearchitektur des Softwareentwicklungsprojekts "Bahn Zahlsystem". Da es sich hierbei um eine Online-Applikation handelt die über unterschiedliche Wege erreicht werden soll muss ein hierfür geeignetes Architekturkonzept gewählt werden.
+\section{Einführung und Ziele}
+Das folgende Dokument beschreibt die Softwarearchitektur des Projekts "Bahn Zahlsystem", dass in der Übung Software-Engineering entwickelt wurde. Bei der Applikation handelt es sich um eine Neu-Entwicklung auf der Basis eines Online-Shops. Da es sich hierbei um eine Online-Applikation handelt die über unterschiedliche Wege erreicht werden soll muss ein hierfür geeignetes Architekturkonzept gewählt werden.
 
-\section{Architekturkontept}
+\paragraph{}
+Das Projekt wird mit der Programmiersprache Java (Version 8) entwickelt und wird auf einem Applikationsserver (Oracle Glassfish) deployed.
+
+\section{Architekturkonzept}
 Das Projekt \glqq{}Bahn Zahlsystem\grqq{} ist eine Online-Applikation die mehrere Möglichkeiten der Nutzung bietet. Außerdem müssen externe Drittapplikationen in die Applikation integriert werden können. Das Grundkonzept das hier verwendet werden soll ist die Schichtenarchitektur. Diese bietet den Vorteil, dass Änderungen in bestimmten Bereichen nicht die komplette Applikation beeinflussen sondern nur in der jeweiligen Schicht angepasst werden müssen. Außerdem lassen sich in diesem Fall die Komponenten der Schichten auf logischer Ebene trennen und jeder Schicht einen speziellen Aufgabenbereich zuordnen. Die Architektur umfasst dabei die 4 Schichten für:
 \begin{itemize}\itemsep2pt
  \item Domänenobjekte und Peristenz
@@ -157,8 +160,145 @@ In dieser Schicht sind die einzelnen Objekte und deren Metadaten definiert, die 
 Eine Bereitstellung der Objekte bzw. der Persistierung von Änderungen in der Datenbank erfolgt nur auf Anfrage. Die darüberliegende Schicht fragt über diese Persistenzschicht an, das Objekt mit den Daten aus der Datenbank zu befüllen. Um geänderte Daten in die Datenbank zu speichern, wird von der darüberliegenden Schicht eine Methode dieser Persistenzschicht aufgerufen.\newline
 Die Menge der Domänenobjekte und deren Metadaten ist eine nahezu vollständig definierte Menge. Änderungen in dieser Schicht ergeben weitreichendere Folgen für alle darüber angesiedelten Schichten. Außerdem ist in dieser Schicht die technische Schnittstelle zur Datenbank angesiedelt, sowie die Datenbank selbst.
 
+\subsubsection{Dienste}
+Folgende Aufzählung zeigt die Entitäten, die in der Persistenz-Schicht abgebildet sind:
+\begin{itemize}\itemsep2pt
+	\item User
+	\item Produkt
+	\item Warenkorb
+	\item Einkauf
+	\item Log
+\end{itemize}
+\vspace{5pt}
+Funktionen die diese Dienste bereitstellen sind:
+\begin{itemize}
+	\item Suchen - gibt Liste$<$Objekt$>$ zurück\\
+	\verb!public List<Objekt> search(String searchterm);!
+	\item Erhalten - gibt Objekt zurück\\
+	\verb!public Objekt get(long id);!
+	\item Erstellen eines Objekts\\
+	\verb!public Objekt new();!
+	\item Speichern eines Objekts\\
+	\verb!public void store(Objekt obj);!
+	\item Löschen eines Objekts\\
+	\verb!public void delete(Objekt obj);!
+\end{itemize}
+
 \subsection{Business-Logik}
 Diese Schicht beinhaltet die komplette Logik die für die Abwicklung der Business-Prozesse nötig ist. Sie bildet somit die Use-Cases der Requirement-Engineering Phase ab. Die Logik greift auf die Objekte der unteren Schicht zu und führt Operationen darauf aus. Außerdem erfolgt die komplette Fehlerbehandlung dieser und der darunterliegenden Schichten in dieser Schicht. Lediglich die Benutzeroberfläche beinhaltet ein eigenes Fehlermanagement, da dieses potentiell nicht Teil der selbstentwickelten Lösung sein muss. Die Dienste der Business-Logik stehen den darüberliegenden Schichten als REST-Schnittstelle zur Verfügung die eine Datenschnittstelle via JSON/XML bietet.
+
+% ?????????
+% Objekte hin und her? Oder doch nur die wichtigsten Daten eines Objekts (z.B. ID, Titel und Preis beim Produkt)
+% User-Objekt Login beschreiben
+\subsubsection{Dienste}
+\begin{itemize}
+	\item[] \textbf{Benutzer registrieren:}\\
+	URI: /registerUser/\\
+	JSON-Request:\\
+	\begin{lstlisting}
+{
+	"vorname": "",
+	"nachname": "",
+	"gebdat": { "type": "date" },
+	"email": "",
+	"geschlecht": [ "m", "w" ]
+}
+	\end{lstlisting}
+%	Http-Response:\\
+%	OK: 200\\
+%	Fehler: \\
+	JSON-Response:\\
+	\begin{lstlisting}
+{
+	"meldungscode": [ "OK", "Fehler" ],
+	"meldungstext": ""
+}
+	\end{lstlisting}
+	
+	%%
+	\item[] \textbf{Login:}\\
+	URI: /login/\\
+	JSON-Request:\\
+	\begin{lstlisting}
+{
+	"email": "",
+	"passwort": ""
+}
+	\end{lstlisting}
+	JSON-Response:\\
+	Weiterleitung auf Index-Seite\\
+	\begin{lstlisting}
+{
+	"meldungscode": [ "OK", "Fehler" ],
+	"meldungstext": ""
+}
+	\end{lstlisting}
+	
+	%%
+	\item[] \textbf{Suche:}\\
+	URI: /search/\\
+	JSON-Request:\\
+	\begin{lstlisting}
+{
+	"searchString": ""
+}
+	\end{lstlisting}
+	JSON-Response:\\
+	\begin{lstlisting}
+{
+	"produkte": { "type": "ArrayList<Produkt>" }
+}
+	\end{lstlisting}
+	
+	%%
+	\item[] \textbf{Produkt zu Warenkorb hinzufügen/entfernen:}\\
+	URI: /shoppingcart/\\
+	JSON-Request:\\
+	\begin{lstlisting}
+{
+	"warenkorb": "{ "type": "Warenkorb" }"
+}
+	\end{lstlisting}
+	JSON-Response:\\
+	\begin{lstlisting}
+{
+	"warenkorb": "{ "type": "Warenkorb" }",
+	"meldungscode": [ "OK", "Fehler" ],
+	"meldungstext": ""
+}
+	\end{lstlisting}
+	
+	%%
+	\item[] \textbf{Bezahlen:}\\
+	URI: /shoppingcart/\\
+	JSON-Request:\\
+	\begin{lstlisting}
+{
+	"warenkorb": "{ "type": "Warenkorb" }"
+}
+	\end{lstlisting}
+	JSON-Response:\\
+	\begin{lstlisting}
+{
+	"einkauf": "{ "type": "Einkauf" }",
+	"meldungscode": [ "OK", "Fehler" ],
+	"meldungstext": ""
+}
+	\end{lstlisting}
+	
+	%%
+	\item[] \textbf{Logout:}\\
+	URI: /logout/\\
+	JSON-Request: -\\
+	JSON-Response:\\
+	Weiterleitung auf Login-Seite\\
+	\begin{lstlisting}
+{
+	"meldungscode": [ "OK", "Fehler" ],
+	"meldungstext": ""
+}
+	\end{lstlisting}
+\end{itemize}
 
 \subsection{Benutzeroberfläche}
 Die Benutzeroberfläche ist in einer eigenen Schicht gekapselt und ist somit getrennt von der Bunsiness-Logik. Sie beinhaltet alle nötigen Steuerelemente die der Benutzer braucht um Prozesse durchzuführen. Durch die Trennung der Oberfläche können somit Anpassungen vorgenommen werden, ohne das Änderungen in den Schichten darunter nötig sind. Ob es sich bei der Benutzeroberfläche um ein Webinterface oder eine Mobile-App handelt ist damit unerheblich. Außerdem können mehrere unterschiedliche Benutzeroberflächen parallel existieren.
@@ -175,6 +315,9 @@ In Abbildung \ref{fig:architektur} ist das Schema der einzelnen Schichten in der
 	\label{fig:architektur}
 \end{figure}
 Zu erkennen sind außerdem die einzelnen Schnittstellen und um welchen Typ von Schnittstelle es sich hierbei handelt.
+
+\section{Architekturumsetzung}
+
 
 \newpage
 %----------------------------------------------------------------------------------------
