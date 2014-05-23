@@ -39,7 +39,8 @@
 	\begin{itemize}
 		\item Entwicklung eines Zahlsystems für Bahnkunden
 		\item Online-Shop für Speisewagen
-		\item einfache Bedienung (z.B. per App)
+		\item einfache Bedienung für User (z.B. per App)
+		\item einfache Administration
 		\item mehrere Zahlungsmöglichkeiten
 	\end{itemize}
 \end{frame}
@@ -54,6 +55,7 @@
 	\begin{itemize}
 		\item Standardisierte Form für einen Use Case
 		\item Definition von Modalverben
+		\item Sicherstellung aller Metadaten
 	\end{itemize}
 	\end{block}
 \end{frame}
@@ -90,8 +92,9 @@
 	\begin{block}{Gründe für das Schichtenmodell}
 		\begin{itemize}
 			\item Trennung von Aufgabenbereichen
-			\item separate Entwicklung jeder Schicht
-			\item dadurch sind unterschiedliche Entwicklungsteams möglich
+			\item separate Entwicklung jeder Schicht -$>$ Entwicklerteams
+			\item lose Kopplung der Schichten
+			\item keine zyklischen Abhängigkeiten
 		\end{itemize}
 	\end{block}
 \end{frame}
@@ -110,6 +113,22 @@
 		\centering	
 		\includegraphics[width=0.5\textwidth]{img/architektur.png}
 	\end{figure}
+\end{frame}
+
+\begin{frame}{Alternative}
+	\begin{itemize}
+		\item Alternatives Architekturmodell
+	\end{itemize}
+	\begin{block}{Micro-Service-Architektur}
+		\begin{itemize}
+			\item Aufteilung der einzelnen Komponenten als Service
+			\item separate Entwicklung jedes Service
+			\item lose Kopplung der Services
+			\item jeweils eigener Technology-Stack
+			\item Resilience Service Design -$>$ Availability
+		\end{itemize}
+	\end{block}
+	Mehr Infos: \url{plainoldobjects.com} oder @crichardson
 \end{frame}
 
 \end{document}

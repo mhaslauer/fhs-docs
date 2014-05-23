@@ -187,102 +187,319 @@ Funktionen die diese Dienste bereitstellen sind:
 \subsection{Business-Logik}
 Diese Schicht beinhaltet die komplette Logik die für die Abwicklung der Business-Prozesse nötig ist. Sie bildet somit die Use-Cases der Requirement-Engineering Phase ab. Die Logik greift auf die Objekte der unteren Schicht zu und führt Operationen darauf aus. Außerdem erfolgt die komplette Fehlerbehandlung dieser und der darunterliegenden Schichten in dieser Schicht. Lediglich die Benutzeroberfläche beinhaltet ein eigenes Fehlermanagement, da dieses potentiell nicht Teil der selbstentwickelten Lösung sein muss. Die Dienste der Business-Logik stehen den darüberliegenden Schichten als REST-Schnittstelle zur Verfügung die eine Datenschnittstelle via JSON/XML bietet.
 
-% ?????????
-% Objekte hin und her? Oder doch nur die wichtigsten Daten eines Objekts (z.B. ID, Titel und Preis beim Produkt)
-% User-Objekt Login beschreiben
 \subsubsection{Dienste}
+Alle Dienste der Business-Logik sind als Public Funktionen aufrufbar und kommunizieren ausschließlich über JSON Post Requests. Als Antwort wird wiederum ein JSON geschickt. Folgende Funktionen sind verfügbar:
 \begin{itemize}
 	\item[] \textbf{Benutzer registrieren:}\\
 	URI: /registerUser/\\
-	JSON-Request:\\
+	JSON-Request:
 	\begin{lstlisting}
 {
-	"vorname": "",
-	"nachname": "",
-	"gebdat": { "type": "date" },
-	"email": "",
-	"geschlecht": [ "m", "w" ]
+"type":"object",
+"$schema": "http://json-schema.org/draft-03/schema",
+"id": "registerUser/Request",
+"required":true,
+"properties":{
+	"request": {
+		"type":"object",
+		"required":true,
+		"properties":{
+			"email": {
+				"type":"string",
+				"required":true
+			},
+			"gebdat": {
+				"type":"date",
+				"required":true
+			},
+			"geschlecht": {
+				"type": { "enum" : ["w", "m"] },
+				"required":true
+			},
+			"nachname": {
+				"type":"string",
+				"required":true
+			},
+			"vorname": {
+				"type":"string",
+				"required":true
+			}
+		}
+	}
+}
 }
 	\end{lstlisting}
 %	Http-Response:\\
 %	OK: 200\\
 %	Fehler: \\
-	JSON-Response:\\
+	JSON-Response:
 	\begin{lstlisting}
 {
-	"meldungscode": [ "OK", "Fehler" ],
-	"meldungstext": ""
+"type":"object",
+"$schema": "http://json-schema.org/draft-03/schema",
+"id": "registerUser/Response",
+"required":true,
+"properties":{
+	"meldungscode": {
+		"type": {"enum" : ["OK", "Fehler"] },
+		"required":true
+	},
+	"meldungstext": {
+		"type":"string",
+		"required":true
+	}
+}
 }
 	\end{lstlisting}
 	
 	%%
 	\item[] \textbf{Login:}\\
 	URI: /login/\\
-	JSON-Request:\\
+	JSON-Request:
 	\begin{lstlisting}
 {
-	"email": "",
-	"passwort": ""
+"type":"object",
+"$schema": "http://json-schema.org/draft-03/schema",
+"id": "login/Request",
+"required":true,
+"properties":{
+	"email": {
+		"type":"string",
+		"required":true
+	},
+	"passwort": {
+		"type":"string",
+		"required":true
+	}
 }
+}
+
 	\end{lstlisting}
 	JSON-Response:\\
-	Weiterleitung auf Index-Seite\\
+	Weiterleitung auf Index-Seite
 	\begin{lstlisting}
 {
-	"meldungscode": [ "OK", "Fehler" ],
-	"meldungstext": ""
+"type":"object",
+"$schema": "http://json-schema.org/draft-03/schema",
+"id": "login/Response",
+"required":true,
+"properties":{
+	"meldungscode": {
+		"type": {"enum" : ["OK", "Fehler"] },
+		"required":true
+	},
+	"meldungstext": {
+		"type":"string",
+		"required":true
+	}
+}
 }
 	\end{lstlisting}
 	
 	%%
 	\item[] \textbf{Suche:}\\
 	URI: /search/\\
-	JSON-Request:\\
+	JSON-Request:
 	\begin{lstlisting}
 {
-	"searchString": ""
+"type":"object",
+"$schema": "http://json-schema.org/draft-03/schema",
+"id": "search/Request",
+"required":true,
+"properties":{
+	"searchString": {
+		"type":"string",
+		"required":true
+	}
 }
+}
+
 	\end{lstlisting}
-	JSON-Response:\\
+	JSON-Response:
 	\begin{lstlisting}
 {
-	"produkte": { "type": "ArrayList<Produkt>" }
+"type":"object",
+"$schema": "http://json-schema.org/draft-03/schema",	
+"id": "search/Response",
+"required":true,
+"properties":{
+	"produkte": {
+		"type":"array",
+		"required":true,
+		"items": {
+			"type":"object",
+			"required":true,
+			"properties":{
+				"beschreibung": {
+					"type":"string",
+					"required":true
+				},
+				"name": {
+					"type":"string",
+					"required":true
+				},
+				"preis": {
+					"type":"number",
+					"required":true
+				},
+				"verfuegbarkeit": {
+					"type":"number",
+					"required":true
+				}
+			}
+		}
+	}
+}
 }
 	\end{lstlisting}
 	
 	%%
 	\item[] \textbf{Produkt zu Warenkorb hinzufügen/entfernen:}\\
 	URI: /shoppingcart/\\
-	JSON-Request:\\
+	JSON-Request:
 	\begin{lstlisting}
 {
-	"warenkorb": "{ "type": "Warenkorb" }"
+"type":"object",
+"$schema": "http://json-schema.org/draft-03/schema",
+"id": "shoppingcart/Request",
+"required":true,
+"properties":{
+	"warenkorb": {
+		"type":"array",
+		"required":false,
+		"items": {
+			"type":"object",
+			"required":true,
+			"properties":{
+				"beschreibung": {
+					"type":"string",
+					"required":true
+				},
+				"name": {
+					"type":"string",
+					"required":true
+				},
+				"preis": {
+					"type":"number",
+					"required":true
+				},
+				"verfuegbarkeit": {
+					"type":"number",
+					"required":true
+				}
+			}
+		}
+	}
+}
 }
 	\end{lstlisting}
-	JSON-Response:\\
+	JSON-Response:
 	\begin{lstlisting}
 {
-	"warenkorb": "{ "type": "Warenkorb" }",
-	"meldungscode": [ "OK", "Fehler" ],
-	"meldungstext": ""
+"type":"object",
+"$schema": "http://json-schema.org/draft-03/schema",
+"id": "shoppingcart/Request",
+"required":true,
+"properties":{
+	"warenkorb": {
+		"type":"array",
+		"required":true,
+		"items": {
+			"type":"object",
+			"required":true,
+			"properties":{
+				"beschreibung": {
+					"type":"string",
+					"required":true
+				},
+				"name": {
+					"type":"string",
+					"required":true
+				},
+				"preis": {
+					"type":"number",
+					"required":true
+				},
+				"verfuegbarkeit": {
+					"type":"number",
+					"required":true
+				}
+			}
+		}
+	}
+	"meldungscode": {
+		"type": {"enum" : ["OK", "Fehler"] },
+		"required":true
+	},
+	"meldungstext": {
+		"type":"string",
+		"required":true
+	}
+}
 }
 	\end{lstlisting}
 	
 	%%
 	\item[] \textbf{Bezahlen:}\\
-	URI: /shoppingcart/\\
-	JSON-Request:\\
+	URI: /order/\\
+	JSON-Request:
 	\begin{lstlisting}
 {
-	"warenkorb": "{ "type": "Warenkorb" }"
+"type":"object",
+"$schema": "http://json-schema.org/draft-03/schema",
+"id": "order/Request",
+"required":true,
+"properties":{
+	"warenkorb": {
+		"type":"array",
+		"required":true,
+		"items": {
+			"type":"object",
+			"required":true,
+			"properties":{
+				"beschreibung": {
+					"type":"string",
+					"required":true
+				},
+				"name": {
+					"type":"string",
+					"required":true
+				},
+				"preis": {
+					"type":"number",
+					"required":true
+				},
+				"verfuegbarkeit": {
+					"type":"number",
+					"required":true
+				}
+			}
+		}
+	},
+	"ordertype" : {
+		"type": {"enum" : ["Bar", "Kreditkarte"] },
+		"required":true
+	}
+}
 }
 	\end{lstlisting}
-	JSON-Response:\\
+	JSON-Response:
 	\begin{lstlisting}
 {
-	"einkauf": "{ "type": "Einkauf" }",
-	"meldungscode": [ "OK", "Fehler" ],
-	"meldungstext": ""
+"type":"object",
+"$schema": "http://json-schema.org/draft-03/schema",
+"id": "order/Response",
+"required":true,
+"properties":{
+	"meldungscode": {
+		"type": {"enum" : ["OK", "Fehler"] },
+		"required":true
+	},
+	"meldungstext": {
+		"type":"string",
+		"required":true
+	}
+}
 }
 	\end{lstlisting}
 	
@@ -294,17 +511,45 @@ Diese Schicht beinhaltet die komplette Logik die für die Abwicklung der Busines
 	Weiterleitung auf Login-Seite\\
 	\begin{lstlisting}
 {
-	"meldungscode": [ "OK", "Fehler" ],
-	"meldungstext": ""
+"type":"object",
+"$schema": "http://json-schema.org/draft-03/schema",
+"id": "logout/Response",
+"required":true,
+"properties":{
+	"meldungscode": {
+		"type": {"enum" : ["OK", "Fehler"] },
+		"required":true
+	},
+	"meldungstext": {
+		"type":"string",
+		"required":true
+	}
+}
 }
 	\end{lstlisting}
 \end{itemize}
 
+\subsection{Anbindung Drittsysteme}
+Die Anbindung von Drittsystemen wird in einer eigenen Schicht gekapselt. Diese Schicht beinhaltet alle nötige Logik um ein Drittsystem nutzen zu können. Die Schnittstellen der Drittsysteme werden somit in einen eigene Schnittstelle umgewandelt die letztendlich von der Business-Logik genutzt werden. Die Business-Logik bekommt somit nichts vom Drittsystem mit, was ein Austauschen leichter möglich macht, sofern die Schnittstelle unverändert bleibt. Die Besonderheit dieser Schicht liegt darin, dass sie sich parallel zur Business-Logik schicht befindet und nicht darunter bzw. darüber. Sie kann somit ebenfalls die Domänenobjekte nutzen, allerdings werden ihre Dienste nur von der Business Logik genutzt und über eine Funktionsschnittstelle bereitgestellt.
+
+\subsubsection{Dienste}
+Da einzig an das System angeschlossene Drittsystem ist ein Anbieter eines Kreditkarten-Abrechnungs-Systems. Dieses wird in der Schicht gekapselt und bietet folgende Funktion als Standardschnittstelle an:
+\begin{lstlisting}
+public boolean payWithCreditCard(
+	String number, 
+	String owner, 
+	int checknumber, 
+	String validthru, 
+	float amount
+);
+\end{lstlisting}
+
+
 \subsection{Benutzeroberfläche}
 Die Benutzeroberfläche ist in einer eigenen Schicht gekapselt und ist somit getrennt von der Bunsiness-Logik. Sie beinhaltet alle nötigen Steuerelemente die der Benutzer braucht um Prozesse durchzuführen. Durch die Trennung der Oberfläche können somit Anpassungen vorgenommen werden, ohne das Änderungen in den Schichten darunter nötig sind. Ob es sich bei der Benutzeroberfläche um ein Webinterface oder eine Mobile-App handelt ist damit unerheblich. Außerdem können mehrere unterschiedliche Benutzeroberflächen parallel existieren.
 
-\subsection{Anbindung Drittsysteme}
-Die Anbindung von Drittsystemen wird in einer eigenen Schicht gekapselt. Diese Schicht beinhaltet alle nötige Logik um ein Drittsystem nutzen zu können. Die Schnittstellen der Drittsysteme werden somit in einen eigene Schnittstelle umgewandelt die letztendlich von der Business-Logik genutzt werden. Die Business-Logik bekommt somit nichts vom Drittsystem mit, was ein Austauschen leichter möglich macht, sofern die Schnittstelle unverändert bleibt. Die Besonderheit dieser Schicht liegt darin, dass sie sich parallel zur Business-Logik schicht befindet und nicht darunter bzw. darüber. Sie kann somit ebenfalls die Domänenobjekte nutzen, allerdings werden ihre Dienste nur von der Business Logik genutzt und über eine Funktionsschnittstelle bereitgestellt.
+\subsubsection{Dienste}
+Da die Benutzeroberfläche die oberste Schicht der Architektur darstellt bietet sie keine technischen Dienste an. Sie wird lediglich vom Benutzer verwendet. Die daher angebotenen Dienste dieser Schicht sind somit rein die auf der Benutzeroberfläche platzierten Steuerelemente die sichtbar sind.
 
 \subsection{Schichtendiagramm}
 In Abbildung \ref{fig:architektur} ist das Schema der einzelnen Schichten in der Architektur visualisiert.
@@ -315,9 +560,6 @@ In Abbildung \ref{fig:architektur} ist das Schema der einzelnen Schichten in der
 	\label{fig:architektur}
 \end{figure}
 Zu erkennen sind außerdem die einzelnen Schnittstellen und um welchen Typ von Schnittstelle es sich hierbei handelt.
-
-\section{Architekturumsetzung}
-
 
 \newpage
 %----------------------------------------------------------------------------------------
